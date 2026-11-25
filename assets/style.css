@@ -280,3 +280,6 @@ footer p { font-size: 12.5px; color: var(--ink-3); }
 .logo-img.dark-only { display: none; }
 html[data-theme="dark"] .logo-img:not(.dark-only) { display: none; }
 html[data-theme="dark"] .logo-img.dark-only { display: block; }
+
+/* 快照/实时提示条 */
+.dl-notice { max-width: 860px; margin: 0 auto 16px; padding: 12px 18px; border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 10px; background: var(--bg-card); font-size: 13.5px; color: var(--ink-2); text-align: left; }
