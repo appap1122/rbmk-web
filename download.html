@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>下载中心 · RBMK 显示屏（实时抓取 Gitee / GitHub 发行版）</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="logo" href="index.html"><span class="logo-mark">核</span>RBMK 显示屏</a>
+    <nav class="links">
+      <a href="index.html">首页</a>
+      <a href="features.html">功能</a>
+      <a href="download.html">下载</a>
+      <a href="install.html">安装</a>
+      <a href="commands.html">命令</a>
+      <a href="changelog.html">日志</a>
+      <a href="about.html">署名</a>
+    </nav>
+    <button class="theme-btn" id="themeBtn" title="切换 明/暗 主题" aria-label="切换主题">🌙</button>
+  </div>
+</header>
+
+<div class="page-hero">
+  <i class="glow g1"></i><i class="glow g2"></i>
+  <div class="wrap inner">
+    <h1>下载<span class="gtext">中心</span></h1>
+    <p class="sub">
+      实时抓取 Gitee / GitHub 上两条产品线的<b>全部发行版</b>，自动归类
+      <span class="flag latest">Latest</span>（最新版）与 <span class="flag pre">Pre-release</span>（测试版）。
+      默认展示 Gitee 源。
+    </p>
+  </div>
+</div>
+
+<section style="padding-top:28px">
+  <div class="wrap">
+    <div class="dl-switch">
+      <div class="seg" id="segLine" role="group" aria-label="选择产品线">
+        <span class="seg-label">产品线</span>
+        <button data-v="vanilla" class="on">📦 原版线 <small>· jiezhirbmkmod</small></button>
+        <button data-v="reset">🧱 重置版 <small>· rbmkdisplay</small></button>
+      </div>
+      <div class="seg" id="segSrc" role="group" aria-label="选择下载源">
+        <span class="seg-label">下载源</span>
+        <button data-v="gitee" class="on">🟢 Gitee <small>· 优先推荐</small></button>
+        <button data-v="github">🐙 GitHub <small>· 镜像</small></button>
+      </div>
+    </div>
+
+    <p id="lineDesc" style="text-align:center;font-size:13.5px;color:var(--ink-3);margin:-22px 0 34px"></p>
+
+    <div id="relHost">
+      <div class="dl-state"><span class="spin"></span><div>正在连接平台接口…</div></div>
+    </div>
+
+    <div class="dl-tip">
+      列表由浏览器直接调用 Gitee / GitHub 开放接口实时生成，仓库发布或更新发行版后刷新本页即可看到最新内容，无需改网站。<br>
+      所有客户端必须装<b>同一版本</b>（多人游戏握手校验）；升级前请备份存档并删光旧版 jar。
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="f-links">
+      <a href="https://gitee.com/baldih/jiezhi-and-baldih-rbmk-monitor/releases" target="_blank">Gitee · 原版线发行版</a>
+      <a href="https://gitee.com/baldih/jiezhi-and-baldih-rbmk-monitor-reset/releases" target="_blank">Gitee · 重置版发行版</a>
+      <a href="https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor/releases" target="_blank">GitHub · 原版线发行版</a>
+      <a href="https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor-reset/releases" target="_blank">GitHub · 重置版发行版</a>
+    </div>
+    <p class="credit-line">原作者：<b>树上的节枝（jiezhi）</b> · 本作品基于节枝特效工具 JiezhiMod 二次创作 · <a href="about.html">署名声明</a></p>
+    <p>仅供 Minecraft 游戏娱乐，与任何现实核设施无关 · License MPL-2.0</p>
+  </div>
+</footer>
+
+<script src="assets/main.js"></script>
+</body>
+</html>
