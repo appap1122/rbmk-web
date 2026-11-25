@@ -8,7 +8,11 @@
     else { root.removeAttribute('data-theme'); if (btn) btn.textContent = '🌙'; }
     try { localStorage.setItem('rbmk-theme', dark ? 'dark' : 'light'); } catch (e) {}
   }
-  try { if (localStorage.getItem('rbmk-theme') === 'dark') applyTheme(true); } catch (e) {}
+  try {
+    var qTheme = new URLSearchParams(location.search).get('theme');
+    if (qTheme === 'dark') applyTheme(true);
+    else if (localStorage.getItem('rbmk-theme') === 'dark') applyTheme(true);
+  } catch (e) {}
   if (btn) btn.addEventListener('click', function () { applyTheme(root.getAttribute('data-theme') !== 'dark'); });
 
   /* ---------- 导航高亮 ---------- */
