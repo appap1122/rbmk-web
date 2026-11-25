@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RBMK 显示屏 · 官网 | Minecraft 1.12.2 Forge 模组</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f7f8fa;
+    --bg-warm: #fff8f2;
+    --ink: #1c2230;
+    --ink-2: #55607a;
+    --ink-3: #8a93a8;
+    --line: #e6e9ef;
+    --accent: #d8433b;      /* RBMK 警示红 */
+    --accent-soft: #fdecea;
+    --blue: #2563c9;
+    --blue-soft: #eaf1fd;
+    --green: #1e9e63;
+    --green-soft: #e8f6ef;
+    --radius: 14px;
+    --maxw: 1080px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", "Segoe UI", sans-serif;
+    line-height: 1.7;
+  }
+  a { color: var(--blue); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  /* ===== 顶部导航 ===== */
+  header.nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(255,255,255,.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: var(--maxw); margin: 0 auto; padding: 14px 24px;
+    display: flex; align-items: center; gap: 28px;
+  }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 17px; color: var(--ink); }
+  .logo-dot {
+    width: 26px; height: 26px; border-radius: 7px;
+    background: linear-gradient(135deg, var(--accent), #f2a13c);
+    display: inline-flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 14px; font-weight: 800;
+  }
+  nav.links { display: flex; gap: 22px; margin-left: auto; flex-wrap: wrap; }
+  nav.links a { color: var(--ink-2); font-size: 14.5px; font-weight: 500; }
+  nav.links a:hover { color: var(--accent); text-decoration: none; }
+
+  /* ===== Hero ===== */
+  .hero { padding: 84px 0 64px; text-align: center; background:
+      radial-gradient(1200px 400px at 50% -80px, #fff3ec, transparent),
+      var(--bg); }
+  .hero .badge-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 22px; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 600; padding: 5px 14px; border-radius: 999px;
+    border: 1px solid var(--line); background: #fff; color: var(--ink-2);
+  }
+  .badge.red   { background: var(--accent-soft); border-color: #f5c6c2; color: #b03530; }
+  .badge.blue  { background: var(--blue-soft);  border-color: #c3d7f5; color: #1d4fa8; }
+  .hero h1 { font-size: 46px; font-weight: 800; letter-spacing: 1px; }
+  .hero h1 .thin { color: var(--ink-3); font-weight: 300; }
+  .hero p.sub { margin: 18px auto 0; max-width: 640px; color: var(--ink-2); font-size: 17px; }
+  .hero .cta { margin-top: 34px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 26px; border-radius: 10px; font-size: 15px; font-weight: 600;
+    border: 1px solid transparent; cursor: pointer; transition: .15s;
+  }
+  .btn:hover { text-decoration: none; transform: translateY(-1px); }
+  .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 6px 18px rgba(216,67,59,.25); }
+  .btn-primary:hover { background: #c33a32; }
+  .btn-ghost { background: #fff; color: var(--ink); border-color: var(--line); }
+  .btn-ghost:hover { border-color: var(--ink-3); }
+
+  /* ===== 通用 section ===== */
+  section { padding: 64px 0; }
+  section.alt { background: var(--bg-soft); }
+  h2.sec-title { font-size: 30px; font-weight: 800; text-align: center; letter-spacing: .5px; }
+  p.sec-sub { text-align: center; color: var(--ink-2); margin: 10px auto 0; max-width: 620px; }
+  .sec-head-bar { width: 44px; height: 4px; border-radius: 2px; background: var(--accent); margin: 16px auto 0; }
+
+  /* ===== 双版本对比 ===== */
+  .ver-grid { margin-top: 44px; display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  @media (max-width: 780px) { .ver-grid { grid-template-columns: 1fr; } }
+  .ver-card {
+    background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 28px 28px 24px; position: relative; transition: .18s;
+  }
+  .ver-card:hover { box-shadow: 0 10px 30px rgba(28,34,48,.08); transform: translateY(-2px); }
+  .ver-card .tag {
+    position: absolute; top: -12px; left: 24px; font-size: 12.5px; font-weight: 700;
+    padding: 4px 14px; border-radius: 999px; color: #fff;
+  }
+  .ver-card.v1 .tag { background: var(--blue); }
+  .ver-card.v2 .tag { background: var(--accent); }
+  .ver-card h3 { font-size: 21px; margin-top: 8px; }
+  .ver-card .ver-line { color: var(--ink-3); font-size: 13.5px; margin: 4px 0 14px; }
+  .ver-card ul { list-style: none; }
+  .ver-card ul li { padding: 7px 0 7px 26px; position: relative; font-size: 14.5px; color: var(--ink-2); border-top: 1px dashed var(--line); }
+  .ver-card ul li:first-child { border-top: 0; }
+  .ver-card ul li::before { content: "▸"; position: absolute; left: 6px; color: var(--accent); font-weight: 700; }
+  .ver-card.v1 ul li::before { color: var(--blue); }
+
+  /* ===== 特性网格 ===== */
+  .feat-grid { margin-top: 44px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 900px) { .feat-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 620px) { .feat-grid { grid-template-columns: 1fr; } }
+  .feat {
+    background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 24px; transition: .18s;
+  }
+  .feat:hover { box-shadow: 0 8px 24px rgba(28,34,48,.07); }
+  .feat .ico {
+    width: 42px; height: 42px; border-radius: 11px; font-size: 21px;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 14px;
+    background: var(--bg-warm); border: 1px solid #f5dfd0;
+  }
+  .feat h4 { font-size: 16.5px; margin-bottom: 6px; }
+  .feat p { font-size: 14px; color: var(--ink-2); }
+
+  /* ===== 屏页预览 ===== */
+  .prev-grid { margin-top: 44px; display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  @media (max-width: 780px) { .prev-grid { grid-template-columns: 1fr; } }
+  .prev-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; text-align: center; transition: .18s; }
+  .prev-card:hover { box-shadow: 0 10px 30px rgba(28,34,48,.09); transform: translateY(-2px); }
+  .prev-card svg { width: 100%; height: auto; display: block; border-radius: 8px; border: 1px solid var(--line); }
+  .prev-card h4 { margin-top: 14px; font-size: 16px; }
+  .prev-card p { font-size: 13.5px; color: var(--ink-2); margin-top: 4px; }
+
+  /* ===== 命令速查 ===== */
+  .cmd-grid { margin-top: 44px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 780px) { .cmd-grid { grid-template-columns: 1fr; } }
+  .cmd-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .cmd-card h4 { padding: 14px 22px; font-size: 15.5px; background: var(--bg-soft); border-bottom: 1px solid var(--line); }
+  .cmd-card table { width: 100%; border-collapse: collapse; }
+  .cmd-card td { padding: 10px 22px; font-size: 13.5px; border-bottom: 1px solid var(--line); color: var(--ink-2); }
+  .cmd-card tr:last-child td { border-bottom: 0; }
+  .cmd-card td:first-child { white-space: nowrap; font-family: Consolas, "JetBrains Mono", monospace; color: var(--ink); font-weight: 600; }
+  .cmd-card td code { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 5px; padding: 1px 6px; font-size: 12px; }
+
+  /* ===== 更新日志 ===== */
+  .log { max-width: 780px; margin: 44px auto 0; position: relative; padding-left: 34px; }
+  .log::before { content: ""; position: absolute; left: 10px; top: 6px; bottom: 6px; width: 2px; background: var(--line); }
+  .log-item { position: relative; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 18px; }
+  .log-item::before { content: ""; position: absolute; left: -31px; top: 26px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); border: 2px solid #fff; box-shadow: 0 0 0 2px var(--accent-soft); }
+  .log-item .ver-tag { display: inline-block; font-size: 12.5px; font-weight: 700; color: #fff; background: var(--accent); border-radius: 6px; padding: 2px 10px; margin-right: 8px; }
+  .log-item.blue .ver-tag { background: var(--blue); }
+  .log-item .date { color: var(--ink-3); font-size: 13px; }
+  .log-item ul { margin: 12px 0 0; padding-left: 20px; }
+  .log-item ul li { font-size: 14px; color: var(--ink-2); padding: 3px 0; }
+  .log-item ul li b { color: var(--ink); }
+
+  /* ===== 下载 ===== */
+  .dl-grid { margin-top: 44px; display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  @media (max-width: 780px) { .dl-grid { grid-template-columns: 1fr; } }
+  .dl-card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; }
+  .dl-card h4 { font-size: 18px; margin-bottom: 4px; }
+  .dl-card .ver { color: var(--ink-3); font-size: 13px; margin-bottom: 16px; }
+  .dl-links { display: flex; gap: 10px; flex-wrap: wrap; }
+  .dl-btn {
+    flex: 1; min-width: 130px; text-align: center; padding: 10px 16px;
+    border-radius: 9px; font-size: 14px; font-weight: 600; border: 1px solid var(--line);
+    color: var(--ink); background: var(--bg-soft);
+  }
+  .dl-btn:hover { text-decoration: none; border-color: var(--blue); color: var(--blue); background: var(--blue-soft); }
+  .dl-btn.git-ee:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+  .dl-meta { margin-top: 14px; font-size: 13px; color: var(--ink-3); }
+
+  /* ===== 安装步骤 ===== */
+  .steps { margin-top: 44px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; counter-reset: step; }
+  @media (max-width: 860px) { .steps { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .steps { grid-template-columns: 1fr; } }
+  .step { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; position: relative; }
+  .step::before {
+    counter-increment: step; content: counter(step);
+    display: inline-flex; width: 30px; height: 30px; border-radius: 50%;
+    background: var(--accent); color: #fff; font-weight: 800; font-size: 15px;
+    align-items: center; justify-content: center; margin-bottom: 12px;
+  }
+  .step h4 { font-size: 15.5px; margin-bottom: 6px; }
+  .step p { font-size: 13.5px; color: var(--ink-2); }
+  .step code {
+    background: var(--bg-soft); border: 1px solid var(--line); border-radius: 6px;
+    padding: 1px 7px; font-size: 12.5px; font-family: Consolas, "JetBrains Mono", monospace;
+  }
+  .warn-box {
+    margin-top: 26px; background: var(--accent-soft); border: 1px solid #f5c6c2;
+    border-radius: 10px; padding: 14px 20px; font-size: 14px; color: #9c2f2a;
+  }
+
+  /* ===== 署名声明 ===== */
+  .credit {
+    max-width: 760px; margin: 44px auto 0; background: #fff;
+    border: 1px solid var(--line); border-left: 4px solid var(--accent);
+    border-radius: var(--radius); padding: 26px 30px;
+  }
+  .credit h3 { font-size: 17px; margin-bottom: 12px; }
+  .credit p { font-size: 14.5px; color: var(--ink-2); }
+  .credit .must { display: flex; flex-direction: column; gap: 8px; margin: 14px 0; }
+  .credit .must span { font-size: 14.5px; color: var(--ink); }
+  .credit .must b { color: var(--accent); }
+
+  /* ===== FAQ ===== */
+  .faq { max-width: 760px; margin: 44px auto 0; }
+  .faq details { background: #fff; border: 1px solid var(--line); border-radius: 10px; margin-bottom: 12px; padding: 16px 22px; }
+  .faq summary { font-weight: 600; cursor: pointer; font-size: 15px; }
+  .faq details p { margin-top: 10px; font-size: 14px; color: var(--ink-2); }
+
+  /* ===== 页脚 ===== */
+  footer {
+    border-top: 1px solid var(--line); background: var(--bg-soft);
+    padding: 40px 0 46px; text-align: center;
+  }
+  footer .f-links { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: 16px; }
+  footer .f-links a { font-size: 14px; color: var(--ink-2); }
+  footer p { font-size: 13px; color: var(--ink-3); }
+  footer .credit-line { margin-top: 10px; font-size: 13px; color: var(--ink-2); }
+  footer .credit-line b { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <span class="logo"><span class="logo-dot">核</span>RBMK 显示屏</span>
+    <nav class="links">
+      <a href="#versions">双版本</a>
+      <a href="#features">功能特性</a>
+      <a href="#preview">屏页预览</a>
+      <a href="#commands">命令速查</a>
+      <a href="#download">下载</a>
+      <a href="#install">安装</a>
+      <a href="#faq">常见问题</a>
+      <a href="#changelog">更新日志</a>
+      <a href="#credit">署名声明</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ Hero ============ -->
+<div class="hero">
+  <div class="wrap">
+    <div class="badge-row">
+      <span class="badge blue">Minecraft 1.12.2 · Forge 14.23.5.2860</span>
+      <span class="badge">依赖：HBM 核技术（Nuclear Tech Mod）</span>
+      <span class="badge red">许可证 MPL-2.0</span>
+    </div>
+    <h1>RBMK 显示屏<span class="thin"> · 中控室解决方案</span></h1>
+    <p class="sub">
+      为 HBM 核技术的 RBMK 反应堆打造的整套监控体系：总览 / 热图 / 自定义 / 曲线四页大屏、
+      真实版 HE·FE 双源供电、遥控 SCRAM、终端与管道命令、报警灯、巡屏聚合中控、
+      曲线历史落盘（放置即自动记录）、审计日志、剪辑式部分导出（图形 / 视频）。
+    </p>
+    <div class="cta">
+      <a class="btn btn-primary" href="#download">⬇ 立即下载</a>
+      <a class="btn btn-ghost" href="#versions">了解双版本差异</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 双版本 ============ -->
+<section id="versions" class="alt">
+  <div class="wrap">
+    <h2 class="sec-title">一个模组，两条产品线</h2>
+    <p class="sec-sub">功能完全一致，渲染架构与命名空间不同——按你的存档情况二选一，不要混装。</p>
+    <div class="sec-head-bar"></div>
+
+    <div class="ver-grid">
+      <div class="ver-card v1">
+        <span class="tag">原版线</span>
+        <h3>RBMK 显示屏</h3>
+        <div class="ver-line">当前版本 18.1 · modid <code style="font-size:12px">jiezhirbmkmod</code></div>
+        <ul>
+          <li>监控屏采用 TESR 渲染（继承自原作设计的体系）</li>
+          <li>支持屏体连续倾斜吊装（原作同款吊装手感）</li>
+          <li>与 17.x 系列老存档同源，长期服役存档首选</li>
+          <li>全功能：四页屏 / 真实版 / 终端 / 轮播 / 审计 / 剪辑导出</li>
+        </ul>
+      </div>
+      <div class="ver-card v2">
+        <span class="tag">重置版</span>
+        <h3>RBMK 显示屏（重置版）</h3>
+        <div class="ver-line">当前版本 18.1-reset · modid <code style="font-size:12px">rbmkdisplay</code></div>
+        <ul>
+          <li><b>零 TESR</b>：监控屏渲染彻底重写为自研方块模型 + 世界渲染事件层</li>
+          <li>画面进区块静态网格体系，遮挡天然正确、性能更好</li>
+          <li>屏体改为平贴安装（暂不支持连续倾斜）</li>
+          <li>物品与 18.1 同款同名，但注册前缀为 <code style="font-size:12px">rbmkdisplay:</code>，存档不互通</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 功能特性 ============ -->
+<section id="features">
+  <div class="wrap">
+    <h2 class="sec-title">功能特性</h2>
+    <p class="sec-sub">从一块屏到一整间中控室。</p>
+    <div class="sec-head-bar"></div>
+
+    <div class="feat-grid">
+      <div class="feat"><div class="ico">📺</div><h4>四页监控大屏</h4><p>总览 / 热图 / 自定义 / 曲线四页屏，4×3 多方块吊装大板，768×576 高清动态画面，开机自检动画。</p></div>
+      <div class="feat"><div class="ico">🔋</div><h4>真实版 HE·FE 双源</h4><p>_real 真实版显示屏独立 HE 缓冲，HE / FE 任一有电即可工作，屏上显示当前电源来源；断电黑屏提示、恢复供电自动续录。</p></div>
+      <div class="feat"><div class="ico">🎮</div><h4>遥控 SCRAM</h4><p>手持遥控器对准屏右键即可远程停堆；报警灯塔随报警等级变色鸣响，中控室氛围拉满。</p></div>
+      <div class="feat"><div class="ico">⌨️</div><h4>终端与管道</h4><p>落地终端 / 便携终端，<code>status | filter heat &gt; 800</code> 管道过滤、宏指令、密码握手，落地终端大屏同步显示。</p></div>
+      <div class="feat"><div class="ico">🗂️</div><h4>历史黑匣子</h4><p>曲线历史<b>放置即自动记录</b>（不依赖有人看屏），15 秒批量落盘 <code>rbmk_history/</code>，断电冻结不丢档，重启接续。</p></div>
+      <div class="feat"><div class="ico">🎬</div><h4>剪辑式导出</h4><p>像剪映一样框选时间段：导出 PNG 序列 / CSV / MP4 视频（无依赖自动降级），导出 GUI 内播放预览。</p></div>
+      <div class="feat"><div class="ico">🛡️</div><h4>审计日志</h4><p>开机 / 断电 / SCRAM / 密码握手全程写入 <code>rbmk_audit.log</code>，服务器管理员可追溯每一次操作。</p></div>
+      <div class="feat"><div class="ico">🔄</div><h4>轮播与巡屏</h4><p>轮播屏自动轮翻总览 / 热图 / 曲线页；巡屏面板把全厂所有屏聚合到一个 GUI 里逐个查看。</p></div>
+      <div class="feat"><div class="ico">📖</div><h4>三卷手册</h4><p>游戏内《持证必读》三卷手册，从放置接线到终端命令全教程，固件横幅与模组版本同步。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 屏页预览 ============ -->
+<section id="preview" class="alt">
+  <div class="wrap">
+    <h2 class="sec-title">屏页预览</h2>
+    <p class="sec-sub">四种屏页画面示意（示意渲染，游戏内为 768×576 实时动态画面）。</p>
+    <div class="sec-head-bar"></div>
+
+    <div class="prev-grid">
+      <!-- 总览页 -->
+      <div class="prev-card">
+        <svg viewBox="0 0 384 216" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="总览页示意">
+          <rect width="384" height="216" fill="#0d1420"/>
+          <text x="16" y="24" fill="#8fb4e8" font-size="12" font-family="monospace">RBMK MONITOR · 总览</text>
+          <line x1="0" y1="34" x2="384" y2="34" stroke="#1e2c44" stroke-width="1"/>
+          <g font-family="monospace" font-size="11">
+            <rect x="16" y="46" width="168" height="46" rx="3" fill="#13203a"/>
+            <text x="26" y="64" fill="#5f7ba6">堆芯均温</text>
+            <text x="26" y="82" fill="#ffb347" font-size="16" font-weight="bold">612.4 °C</text>
+            <rect x="200" y="46" width="168" height="46" rx="3" fill="#13203a"/>
+            <text x="210" y="64" fill="#5f7ba6">中子通量</text>
+            <text x="210" y="82" fill="#6ee7a0" font-size="16" font-weight="bold">8.42 kN</text>
+            <rect x="16" y="100" width="168" height="46" rx="3" fill="#13203a"/>
+            <text x="26" y="118" fill="#5f7ba6">水存量</text>
+            <text x="26" y="136" fill="#6ec3ff" font-size="16" font-weight="bold">96 %</text>
+            <rect x="200" y="100" width="168" height="46" rx="3" fill="#13203a"/>
+            <text x="210" y="118" fill="#5f7ba6">蒸汽产出</text>
+            <text x="210" y="136" fill="#6ee7a0" font-size="16" font-weight="bold">12.7 kB/s</text>
+          </g>
+          <rect x="16" y="156" width="352" height="44" rx="3" fill="#13203a"/>
+          <text x="26" y="174" fill="#5f7ba6" font-size="11" font-family="monospace">燃料棒 16/16 · 状态</text>
+          <rect x="220" y="163" width="70" height="16" rx="8" fill="#134e2f"/>
+          <text x="255" y="175" fill="#6ee7a0" font-size="10" text-anchor="middle" font-family="monospace">正常</text>
+          <rect x="298" y="163" width="58" height="16" rx="8" fill="#3a2a13"/>
+          <text x="327" y="175" fill="#ffb347" font-size="10" text-anchor="middle" font-family="monospace">氙 14%</text>
+        </svg>
+        <h4>总览页</h4>
+        <p>均温 / 通量 / 水 / 蒸汽四大仪表 + 燃料棒状态与氙毒累积。</p>
+      </div>
+
+      <!-- 热图页 -->
+      <div class="prev-card">
+        <svg viewBox="0 0 384 216" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="热图页示意">
+          <rect width="384" height="216" fill="#0d1420"/>
+          <text x="16" y="24" fill="#8fb4e8" font-size="12" font-family="monospace">RBMK MONITOR · 热图</text>
+          <line x1="0" y1="34" x2="384" y2="34" stroke="#1e2c44" stroke-width="1"/>
+          <g>
+            <rect x="56" y="48" width="40" height="40" fill="#3b6fd4"/><rect x="104" y="48" width="40" height="40" fill="#2ea36c"/>
+            <rect x="152" y="48" width="40" height="40" fill="#f2c53d"/><rect x="200" y="48" width="40" height="40" fill="#e8792f"/>
+            <rect x="248" y="48" width="40" height="40" fill="#c93b2f"/><rect x="296" y="48" width="40" height="40" fill="#2ea36c"/>
+            <rect x="56" y="96" width="40" height="40" fill="#2ea36c"/><rect x="104" y="96" width="40" height="40" fill="#f2c53d"/>
+            <rect x="152" y="96" width="40" height="40" fill="#e8792f"/><rect x="200" y="96" width="40" height="40" fill="#c93b2f"/>
+            <rect x="248" y="96" width="40" height="40" fill="#f2c53d"/><rect x="296" y="96" width="40" height="40" fill="#3b6fd4"/>
+            <rect x="56" y="144" width="40" height="40" fill="#2ea36c"/><rect x="104" y="144" width="40" height="40" fill="#3b6fd4"/>
+            <rect x="152" y="144" width="40" height="40" fill="#2ea36c"/><rect x="200" y="144" width="40" height="40" fill="#f2c53d"/>
+            <rect x="248" y="144" width="40" height="40" fill="#3b6fd4"/><rect x="296" y="144" width="40" height="40" fill="#2ea36c"/>
+          </g>
+          <g font-family="monospace" font-size="9" fill="#9aa7bd">
+            <text x="76" y="70" text-anchor="middle">412</text><text x="124" y="70" text-anchor="middle">386</text>
+            <text x="172" y="70" text-anchor="middle">545</text><text x="220" y="70" text-anchor="middle">688</text>
+            <text x="268" y="70" text-anchor="middle">931</text><text x="316" y="70" text-anchor="middle">394</text>
+          </g>
+          <g font-size="10" font-family="monospace">
+            <rect x="16" y="196" width="12" height="10" fill="#3b6fd4"/><text x="32" y="205" fill="#9aa7bd">低温</text>
+            <rect x="70" y="196" width="12" height="10" fill="#2ea36c"/><text x="86" y="205" fill="#9aa7bd">正常</text>
+            <rect x="124" y="196" width="12" height="10" fill="#f2c53d"/><text x="140" y="205" fill="#9aa7bd">偏热</text>
+            <rect x="178" y="196" width="12" height="10" fill="#e8792f"/><text x="194" y="205" fill="#9aa7bd">高温</text>
+            <rect x="232" y="196" width="12" height="10" fill="#c93b2f"/><text x="248" y="205" fill="#9aa7bd">危险</text>
+          </g>
+        </svg>
+        <h4>热图页</h4>
+        <p>每根燃料棒一格，色阶直读温度分布，过热棒一眼锁定。</p>
+      </div>
+
+      <!-- 曲线页 -->
+      <div class="prev-card">
+        <svg viewBox="0 0 384 216" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="曲线页示意">
+          <rect width="384" height="216" fill="#0d1420"/>
+          <text x="16" y="24" fill="#8fb4e8" font-size="12" font-family="monospace">RBMK MONITOR · 曲线（60s 窗口）</text>
+          <line x1="0" y1="34" x2="384" y2="34" stroke="#1e2c44" stroke-width="1"/>
+          <g stroke="#1a2740" stroke-width="1">
+            <line x1="40" y1="60" x2="360" y2="60"/><line x1="40" y1="100" x2="360" y2="100"/>
+            <line x1="40" y1="140" x2="360" y2="140"/><line x1="40" y1="180" x2="360" y2="180"/>
+          </g>
+          <g font-family="monospace" font-size="9" fill="#5f7ba6">
+            <text x="34" y="64" text-anchor="end">800</text><text x="34" y="104" text-anchor="end">600</text>
+            <text x="34" y="144" text-anchor="end">400</text><text x="34" y="184" text-anchor="end">200</text>
+          </g>
+          <polyline points="40,150 64,146 88,140 112,132 136,120 160,96 178,178 182,178 186,110 210,104 234,98 258,90 282,84 306,78 330,72 360,66"
+                    fill="none" stroke="#ffb347" stroke-width="2"/>
+          <polyline points="40,168 64,166 88,162 112,158 136,152 160,148 184,150 208,146 232,142 256,138 280,134 304,130 328,126 360,122"
+                    fill="none" stroke="#6ec3ff" stroke-width="2"/>
+          <line x1="178" y1="52" x2="178" y2="180" stroke="#4b5568" stroke-dasharray="3 3" stroke-width="1"/>
+          <text x="178" y="196" fill="#8a93a8" font-size="9" text-anchor="middle" font-family="monospace">断口</text>
+          <g font-size="10" font-family="monospace">
+            <rect x="52" y="42" width="12" height="10" fill="#ffb347"/><text x="68" y="51" fill="#9aa7bd">均温</text>
+            <rect x="110" y="42" width="12" height="10" fill="#6ec3ff"/><text x="126" y="51" fill="#9aa7bd">通量</text>
+          </g>
+        </svg>
+        <h4>曲线页</h4>
+        <p>温度 / 通量实时曲线，断链离线留下真断口（不连线伪造），历史黑匣子可回放导出。</p>
+      </div>
+
+      <!-- 终端页 -->
+      <div class="prev-card">
+        <svg viewBox="0 0 384 216" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="终端示意">
+          <rect width="384" height="216" fill="#05080d"/>
+          <text x="16" y="24" fill="#39d353" font-size="12" font-family="monospace">rbmk-terminal [v18.1] ▮</text>
+          <line x1="0" y1="34" x2="384" y2="34" stroke="#123320" stroke-width="1"/>
+          <g font-family="monospace" font-size="11" fill="#39d353">
+            <text x="16" y="56">&gt; status | filter heat &gt; 600</text>
+            <text x="16" y="78" fill="#8fb4e8">RBMK-1  heat 612.4  flux 8.42k  [WARN]</text>
+            <text x="16" y="96" fill="#8fb4e8">RBMK-4  heat 931.0  flux 6.10k  [HOT]</text>
+            <text x="16" y="122" fill="#39d353">&gt; macro run scram-drill</text>
+            <text x="16" y="144" fill="#8fb4e8">→ 2 matched · runtime 0.4s</text>
+            <text x="16" y="170" fill="#ffb347">&gt; scram RBMK-4</text>
+            <text x="16" y="192" fill="#ff6b6b">SCRAM confirmed · rods dropped · logged</text>
+          </g>
+        </svg>
+        <h4>终端</h4>
+        <p>落地终端 / 便携终端：管道过滤、宏指令、遥控 SCRAM，全程写入审计日志。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 下载 ============ -->
+<section id="download" class="alt">
+  <div class="wrap">
+    <h2 class="sec-title">下载</h2>
+    <p class="sec-sub">源码与发行版均托管于 Gitee 与 GitHub（双平台镜像同步）。</p>
+    <div class="sec-head-bar"></div>
+
+    <div class="dl-grid">
+      <div class="dl-card">
+        <h4>📦 RBMK 显示屏（原版线）</h4>
+        <div class="ver">v18.1 · modid jiezhirbmkmod · TESR 渲染 · 支持倾斜吊装</div>
+        <div class="dl-links">
+          <a class="dl-btn git-ee" href="https://gitee.com/baldih/jiezhi-and-baldih-rbmk-monitor/releases/tag/v18.1" target="_blank">Gitee 发行版</a>
+          <a class="dl-btn" href="https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor/releases/tag/v18.1" target="_blank">GitHub 下载 jar</a>
+          <a class="dl-btn" href="https://gitee.com/baldih/jiezhi-and-baldih-rbmk-monitor" target="_blank">Gitee 源码</a>
+          <a class="dl-btn" href="https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor" target="_blank">GitHub 源码</a>
+        </div>
+        <div class="dl-meta">产物：RBMK-Monitor-18.1.jar · 175 个 Java 源文件 · 离线可编译</div>
+      </div>
+      <div class="dl-card">
+        <h4>📦 RBMK 显示屏（重置版）</h4>
+        <div class="ver">v18.1-reset · modid rbmkdisplay · 零 TESR · 平贴安装</div>
+        <div class="dl-links">
+          <a class="dl-btn git-ee" href="https://gitee.com/baldih/jiezhi-and-baldih-rbmk-monitor-reset/releases/tag/v18.1-reset" target="_blank">Gitee 发行版</a>
+          <a class="dl-btn" href="https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor-reset/releases/tag/v18.1-reset" target="_blank">GitHub 下载 jar</a>
+          <a class="dl-btn" href="https://gitee.com/baldih/jiezhi-and-baldih-rbmk-monitor-reset" target="_blank">Gitee 源码</a>
+          <a class="dl-btn" href="https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor-reset" target="_blank">GitHub 源码</a>
+        </div>
+        <div class="dl-meta">产物：RBMK-Display-Reset-18.1-reset.jar · 自研方块模型 + 世界渲染事件层</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 安装 ============ -->
+<section id="install">
+  <div class="wrap">
+    <h2 class="sec-title">安装</h2>
+    <p class="sec-sub">四步上车。</p>
+    <div class="sec-head-bar"></div>
+
+    <div class="steps">
+      <div class="step"><h4>装好 Forge</h4><p>Minecraft <b>1.12.2</b> + Forge <b>14.23.5.2860</b>（推荐最新版）。</p></div>
+      <div class="step"><h4>放入 HBM</h4><p>本模组是 HBM 核技术的监控外挂，需同时安装 Nuclear Tech Mod。</p></div>
+      <div class="step"><h4>丢进 mods</h4><p>下载的 jar 放进 <code>mods/</code> 文件夹，启动游戏。</p></div>
+      <div class="step"><h4>阅读手册</h4><p>合成或 <code>/give</code> 三卷手册，跟着《持证必读》放置第一块屏。</p></div>
+    </div>
+
+    <div class="warn-box">
+      ⚠️ <b>红线一</b>：原版线与重置版<b>不可同装</b>（modid 不同能同时启动，但存档物品互不通用，混用后果自负）；
+      <b>红线二</b>：多人游戏所有客户端必须装<b>同一版本</b>（版本不一致会在握手阶段被拒，这是保护不是 bug）；
+      <b>红线三</b>：升级版本前备份存档，mods 里删光旧版 jar 只留新版。
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq" class="alt">
+  <div class="wrap">
+    <h2 class="sec-title">常见问题</h2>
+    <div class="sec-head-bar"></div>
+    <div class="faq">
+      <details open>
+        <summary>曲线导出里历史是空的？</summary>
+        <p>18.1 起，曲线历史<b>屏一放置就开始自动记录</b>，不再要求有人看着屏并停在曲线页。若从 17.x 升级，旧屏会沿用它已记录的历史；新放置的屏从放置那一刻起积累。数据落在游戏目录 <code>rbmk_history/</code>。</p>
+      </details>
+      <details>
+        <summary>真实版显示屏黑屏了，还写着字？</summary>
+        <p>那是断电提示：「真实版曲线显示屏断电，无法记录」。真实版屏需要 <b>HE 或 FE 任一供电</b>（HE 优先）。恢复供电后画面自动恢复，历史原样保留——断电不会丢档也不会挤光曲线。</p>
+      </details>
+      <details>
+        <summary>多人进服被标红拒绝？</summary>
+        <p>网络协议要求两端版本完全一致（如 18.1 ≠ 18.0）。所有客户端与服务端统一升级到同一版本即可。</p>
+      </details>
+      <details>
+        <summary>重置版和原版线怎么选？</summary>
+        <p>想要倾斜吊装、延续老存档 → 原版线；想要更现代的渲染架构（零 TESR、静态网格、更好性能）→ 重置版。两者功能一致，物品同名但存档不互通，只能二选一。</p>
+      </details>
+      <details>
+        <summary>导出 MP4 需要装什么？</summary>
+        <p>可选。安装 JavaCV/FFmpeg 依赖即可直接导出 .mp4；不装也不会崩——自动降级导出 PNG 帧序列 zip。</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 命令速查 ============ -->
+<section id="commands">
+  <div class="wrap">
+    <h2 class="sec-title">终端命令速查</h2>
+    <p class="sec-sub">在落地终端 / 便携终端里使用，支持管道与宏。</p>
+    <div class="sec-head-bar"></div>
+
+    <div class="cmd-grid">
+      <div class="cmd-card">
+        <h4>⌨️ 基础命令</h4>
+        <table>
+          <tr><td>status</td><td>输出全部已绑定反应堆的实时状态行</td></tr>
+          <tr><td>help</td><td>列出命令与语法</td></tr>
+          <tr><td>scram &lt;名&gt;</td><td>远程停堆指定反应堆（写入审计日志）</td></tr>
+          <tr><td>bind / unbind</td><td>绑定 / 解绑数据源（<code>bind x y z</code>）</td></tr>
+          <tr><td>page &lt;n&gt;</td><td>切换大屏页号（1 总览 / 2 热图 / 4 曲线）</td></tr>
+          <tr><td>passwd</td><td>设置终端密码（握手保护）</td></tr>
+        </table>
+      </div>
+      <div class="cmd-card">
+        <h4>⌨️ 管道与宏</h4>
+        <table>
+          <tr><td>| filter</td><td><code>status | filter heat &gt; 800</code>，支持 <code>&gt; &lt; &gt;= &lt;= =</code> 与字段别名，结果 10 秒有效</td></tr>
+          <tr><td>macro set</td><td><code>macro set drill scram RBMK-1; status</code> 保存命令序列（嵌套 ≤ 3）</td></tr>
+          <tr><td>macro run</td><td><code>macro run drill</code> 执行已保存的宏</td></tr>
+          <tr><td>macro list</td><td>列出全部宏定义</td></tr>
+          <tr><td>macro del</td><td>删除指定宏</td></tr>
+          <tr><td>export</td><td>配合剪辑 GUI 导出 PNG 序列 / CSV / MP4</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 更新日志 ============ -->
+<section id="changelog" class="alt">
+  <div class="wrap">
+    <h2 class="sec-title">更新日志</h2>
+    <div class="sec-head-bar"></div>
+
+    <div class="log">
+      <div class="log-item">
+        <span class="ver-tag">v18.1</span><span class="date">原版线 · 当前版本</span>
+        <ul>
+          <li><b>曲线历史放置即自动记录</b>——新增 ScreenAutoSampler，屏一放置/区块一加载就采样，导出/回放从放置起就是完整历史</li>
+          <li><b>真实版断电黑屏提示</b>——黑屏显示「真实版曲线显示屏断电，无法记录」，恢复供电自动续录</li>
+          <li><b>历史冻结防丢档</b>——断电/待机期间采样器冻结，黑匣子与落盘文件永不挤光、永不误删</li>
+          <li>18.1 自查修复：黑屏 alpha 透明渲染 BUG、断电空格挤光历史回归 BUG</li>
+          <li>版本号六处同步（@Mod / mcmod.info / build.gradle / 三卷手册 / 终端横幅），语言键 449 条 en/zh 对齐</li>
+        </ul>
+      </div>
+      <div class="log-item blue">
+        <span class="ver-tag">v18.1-reset</span><span class="date">重置版 · 当前版本</span>
+        <ul>
+          <li><b>监控屏渲染彻底重写，TESR 全部移除</b>——屏体改为自研方块模型（钛灰板段+吊梁，进区块静态网格）</li>
+          <li>画面由自研世界渲染事件层 ScreenWorldRenderer 贴高清 quad，遮挡天然正确，含背面剔除与 64 格距离剔除</li>
+          <li>modid 独立为 <b>rbmkdisplay</b>，与原版线（jiezhirbmkmod）彻底分离</li>
+          <li>功能与 v18.1 完全一致；屏体为平贴安装，暂不支持连续倾斜吊装</li>
+          <li>媒体屏视频 TESR 与报警灯 TESR 不在重写范围，保持原样</li>
+        </ul>
+      </div>
+      <div class="log-item blue">
+        <span class="ver-tag">v18.0</span><span class="date">原版线 · 大版本</span>
+        <ul>
+          <li><b>历史数据落盘黑匣子</b>——HistoryStore + ScreenScan，<code>rbmk_history/</code> 原子写盘，跨版本加载保护</li>
+          <li>真实版供电体系——HbmEnergyProbe 反射探针 + HE·FE 双源（1 FE 当量 = 10 HE）</li>
+          <li>操作审计日志、终端管道过滤（<code>&gt; &lt; &gt;= &lt;= =</code>）与宏指令、画面轮播屏</li>
+          <li>网络协议代号 9：两端版本必须完全一致，否则握手拒绝</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 署名声明 ============ -->
+<section id="credit">
+  <div class="wrap">
+    <h2 class="sec-title">署名声明</h2>
+    <p class="sec-sub">尊重原创，本文模组为二次创作。</p>
+    <div class="sec-head-bar"></div>
+
+    <div class="credit">
+      <h3>⚠️ 原作者署名（三者缺一不可）</h3>
+      <div class="must">
+        <span>👤 原作者名字：<b>树上的节枝</b>（英文名 jiezhi）</span>
+        <span>🔗 原作者主页：<a href="https://space.bilibili.com/3494363348863838" target="_blank">https://space.bilibili.com/3494363348863838</a></span>
+        <span>📄 声明：<b>本作品基于节枝特效工具 JiezhiMod 二次创作</b></span>
+      </div>
+      <p>
+        原作项目：<a href="https://gitee.com/yi-sichen-jiezhi/DFC-Map-Creation-Tool" target="_blank">节枝特效工具 JiezhiMod（DFC-Map-Creation-Tool）</a>。
+        本作品的吊装屏 / 遥控器 / 开机动画等设计语言继承自原作，RBMK/HBM 数据层与中控体系为二次创作重写；
+        重置版的监控屏渲染体系已全部重写为自研实现，不再包含原作代码与资源。
+        本模组与「节枝特效工具」名称完全区分，不暗示原创，转载发布请保留本声明。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 页脚 ============ -->
+<footer>
+  <div class="wrap">
+    <div class="f-links">
+      <a href="https://gitee.com/baldih/jiezhi-and-baldih-rbmk-monitor" target="_blank">Gitee · 原版线</a>
+      <a href="https://gitee.com/baldih/jiezhi-and-baldih-rbmk-monitor-reset" target="_blank">Gitee · 重置版</a>
+      <a href="https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor" target="_blank">GitHub · 原版线</a>
+      <a href="https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor-reset" target="_blank">GitHub · 重置版</a>
+      <a href="https://space.bilibili.com/3494363348863838" target="_blank">原作者主页</a>
+    </div>
+    <p class="credit-line">原作者：<b>树上的节枝（jiezhi）</b> · 本作品基于节枝特效工具 JiezhiMod 二次创作</p>
+    <p>仅供 Minecraft 游戏娱乐，与任何现实核设施无关 · License MPL-2.0</p>
+  </div>
+</footer>
+
+</body>
+</html>
