@@ -222,8 +222,18 @@
     return '实时接口暂时不可用（' + (st ? 'HTTP ' + st : '网络异常') + '），以下为站点自动同步的快照数据（每 30 分钟更新，下载链接始终有效）';
   }
 
-  function setLine(v) { state.line = v; liveDone = false; seg(elSegLine, v); load(); }
-  function setSource(v) { state.source = v; liveDone = false; seg(elSegSrc, v); load(); }
+  function setLine(v) { state.line = v; liveDone = false; seg(elSegLine, v); syncUrl(); load(); }
+  function setSource(v) { state.source = v; liveDone = false; seg(elSegSrc, v); syncUrl(); load(); }
+
+  /* 把当前选择同步到地址栏：download.html?product=original|remastered&source=gitee|github */
+  function syncUrl() {
+    try {
+      var p = new URLSearchParams(location.search);
+      p.set('product', state.line === 'reset' ? 'remastered' : 'original');
+      p.set('source', state.source);
+      history.replaceState(null, '', location.pathname + '?' + p.toString());
+    } catch (e) {}
+  }
 
   elSegLine.querySelectorAll('button').forEach(function (b) {
     b.addEventListener('click', function () { setLine(b.dataset.v); });
@@ -232,9 +242,21 @@
     b.addEventListener('click', function () { setSource(b.dataset.v); });
   });
 
-  /* 支持 download.html?line=reset&src=github 深链 */
-  var q = new URLSearchParams(location.search);
-  if (q.get('line') === 'reset' || q.get('line') === 'vanilla') { state.line = q.get('line'); seg(elSegLine, state.line); }
-  if (q.get('src') === 'gitee' || q.get('src') === 'github') { state.source = q.get('src'); seg(elSegSrc, state.source); }
+  /* URL 深链（多种写法兼容、参数名大小写不敏感）：
+     download.html?product=original|remastered&source=gitee|github
+     别名：product=vanilla|reset|remastered-edition；line=vanilla|reset；src=… */
+  var qmap = {};
+  location.search.replace(/^\?/, '').split('&').forEach(function (kv) {
+    if (!kv) return;
+    var i = kv.indexOf('=');
+    var k = decodeURIComponent(i < 0 ? kv : kv.slice(0, i)).toLowerCase();
+    qmap[k] = decodeURIComponent(i < 0 ? '' : kv.slice(i + 1));
+  });
+  var qp = (qmap.product || qmap.line || '').toLowerCase();
+  if (qp === 'reset' || qp === 'remastered' || qp === 'remastered-edition') state.line = 'reset';
+  else if (qp === 'original' || qp === 'vanilla') state.line = 'vanilla';
+  var qs = (qmap.source || qmap.src || '').toLowerCase();
+  if (qs === 'gitee' || qs === 'github') state.source = qs;
+  seg(elSegLine, state.line); seg(elSegSrc, state.source);
   load();
 })();

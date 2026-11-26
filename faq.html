@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>常见问题 FAQ · RBMK 显示屏</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="assets/favicon-48.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
+<link rel="shortcut icon" href="assets/favicon.ico">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="logo" href="index.html"><img class="logo-img" src="assets/mark-badge-light-64.png" alt="RBMK MONITOR 徽标"><img class="logo-img dark-only" src="assets/mark-badge-dark-64.png" alt="RBMK MONITOR 徽标">RBMK 显示屏</a>
+    <nav class="links">
+      <a href="index.html">首页</a>
+      <a href="features.html">功能</a>
+      <a href="guide.html">教程</a>
+      <a href="screenshots.html">截图</a>
+      <a href="download.html">下载</a>
+      <a href="install.html">安装</a>
+      <a href="commands.html">命令</a>
+      <a href="faq.html">FAQ</a>
+      <a href="changelog.html">日志</a>
+      <a href="about.html">署名</a>
+    </nav>
+    <button class="theme-btn" id="themeBtn" title="切换 明/暗 主题" aria-label="切换主题">🌙</button>
+  </div>
+</header>
+
+<div class="page-hero">
+  <i class="glow g1"></i><i class="glow g2"></i>
+  <div class="wrap inner">
+    <h1>常见<span class="gtext">问题</span></h1>
+    <p class="sub">安装、使用、多人联机、历史数据——高频问题一次答清。</p>
+  </div>
+</div>
+
+<!-- ============ 安装相关 ============ -->
+<section style="padding-top:20px">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-kicker">Install</div><h2>安装与版本</h2></div>
+    <div class="faq">
+      <details>
+        <summary>重置版和原版线怎么选？</summary>
+        <p>想要倾斜吊装、延续老存档 → <b>原版线</b>（jiezhirbmkmod）；想要更现代的渲染架构（零 TESR、静态网格、更好性能）→ <b>重置版</b>（rbmkdisplay）。两者功能一致、物品同名，但存档不互通，只能二选一。</p>
+      </details>
+      <details>
+        <summary>多人进服被标红拒绝？</summary>
+        <p>网络协议要求两端版本完全一致（如 18.1 ≠ 18.0）。所有客户端与服务端统一升级到<a href="download.html">同一版本</a>即可；升级前请备份存档并删光旧版 jar（同名残留会加载冲突）。</p>
+      </details>
+      <details>
+        <summary>可以和 HBM 核技术什么版本一起用？</summary>
+        <p>面向 Minecraft 1.12.2 · Forge 14.23.5.2860 的 HBM 核技术扩展生态开发，需搭配带 RBMK 多方块结构的 HBM 版本使用。三卷《持证必读》手册内页标注了适配细节。</p>
+      </details>
+      <details>
+        <summary>升级后旧屏幕会丢历史吗？</summary>
+        <p>不会。17.x 升到 18.1 时，旧屏沿用已记录的历史继续积累；数据落在游戏目录 <code>rbmk_history/</code>，随存档走。升级前备份存档是好习惯。</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 使用相关 ============ -->
+<section class="soft">
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-kicker">Usage</div><h2>使用与画面</h2></div>
+    <div class="faq">
+      <details>
+        <summary>曲线导出里历史是空的？</summary>
+        <p>18.1 起，曲线历史<b>屏一放置就开始自动记录</b>，不再要求有人看着屏并停在曲线页。若刚放置就导出，历史自然很短——挂机一段时间再导出即可。</p>
+      </details>
+      <details>
+        <summary>真实版显示屏黑屏了，还写着字？</summary>
+        <p>那是断电提示：「真实版曲线显示屏断电，无法记录」。真实版屏需要 <b>HE 或 FE 任一供电</b>（HE 优先）。恢复供电后画面自动恢复，历史原样保留——断电不会丢档也不会挤光曲线。</p>
+      </details>
+      <details>
+        <summary>导出 MP4 需要装什么？</summary>
+        <p>可选。安装 JavaCV/FFmpeg 依赖即可直接导出 .mp4；不装也不会崩——自动降级导出 PNG 帧序列 zip，用本地播放器合成即可。</p>
+      </details>
+      <details>
+        <summary>屏放歪了 / 想换方向怎么办？</summary>
+        <p>原版线用吊梁可重新吊装调角度；重置版屏体贴墙平贴安装，拆下重放即可换面。屏体是多方块结构，拆任意一块整板回收。</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 服务器管理员 ============ -->
+<section>
+  <div class="wrap">
+    <div class="sec-head"><div class="sec-kicker">Admin</div><h2>服务器管理员</h2></div>
+    <div class="faq">
+      <details>
+        <summary>怎么追溯谁按了 SCRAM？</summary>
+        <p>开机 / 断电 / SCRAM / 密码握手全程写入 <code>rbmk_audit.log</code>，含时间、玩家、目标堆。审计文件在游戏（或服务端）根目录，可直接 grep。</p>
+      </details>
+      <details>
+        <summary>历史数据能备份 / 迁移吗？</summary>
+        <p>能。整目录拷贝 <code>rbmk_history/</code> 即可备份迁移；按屏幕维度分文件，删单个文件只丢那一块屏的历史。</p>
+      </details>
+      <details>
+        <summary>担心终端命令被滥用？</summary>
+        <p>终端支持密码握手保护危险操作，宏指令需显式创建；所有命令执行都进审计日志。建议配合权限插件限制终端方块的交互。</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="f-links">
+      <a href="download.html">下载中心</a>
+      <a href="https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor" target="_blank">GitHub · 原版线</a>
+      <a href="https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor-reset" target="_blank">GitHub · 重置版</a>
+      <a href="https://gitee.com/baldih/jiezhi-and-baldih-rbmk-monitor" target="_blank">Gitee · 原版线</a>
+      <a href="https://gitee.com/baldih/jiezhi-and-baldih-rbmk-monitor-reset" target="_blank">Gitee · 重置版</a>
+      <a href="https://space.bilibili.com/3494363348863838" target="_blank">原作者主页</a>
+    </div>
+    <p class="credit-line">原作者：<b>树上的节枝（jiezhi）</b> · 本作品基于节枝特效工具 JiezhiMod 二次创作 · <a href="about.html">署名声明</a></p>
+    <p>仅供 Minecraft 游戏娱乐，与任何现实核设施无关 · License MPL-2.0</p>
+  </div>
+</footer>
+
+<script src="assets/main.js"></script>
+</body>
+</html>

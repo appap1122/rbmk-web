@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>使用教程 · RBMK 显示屏</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="assets/favicon-48.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
+<link rel="shortcut icon" href="assets/favicon.ico">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="logo" href="index.html"><img class="logo-img" src="assets/mark-badge-light-64.png" alt="RBMK MONITOR 徽标"><img class="logo-img dark-only" src="assets/mark-badge-dark-64.png" alt="RBMK MONITOR 徽标">RBMK 显示屏</a>
+    <nav class="links">
+      <a href="index.html">首页</a>
+      <a href="features.html">功能</a>
+      <a href="guide.html">教程</a>
+      <a href="screenshots.html">截图</a>
+      <a href="download.html">下载</a>
+      <a href="install.html">安装</a>
+      <a href="commands.html">命令</a>
+      <a href="faq.html">FAQ</a>
+      <a href="changelog.html">日志</a>
+      <a href="about.html">署名</a>
+    </nav>
+    <button class="theme-btn" id="themeBtn" title="切换 明/暗 主题" aria-label="切换主题">🌙</button>
+  </div>
+</header>
+
+<div class="page-hero">
+  <i class="glow g1"></i><i class="glow g2"></i>
+  <div class="wrap inner">
+    <h1>使用<span class="gtext">教程</span></h1>
+    <p class="sub">从一块屏到一间中控室：放置 → 供电 → 连接 → 记录 → 导出，五步走完。</p>
+  </div>
+</div>
+
+<!-- ============ 五步上手 ============ -->
+<section style="padding-top:20px">
+  <div class="wrap">
+    <div class="feat-grid">
+      <div class="feat"><div class="ico c1">1️⃣</div><h4>放置屏幕</h4><p>手持显示屏右键放置：屏体自动拼成 4×3 多方块大板。原版线支持<b>倾斜吊装</b>（可用吊梁挂天花板上摆角度）；重置版为<b>平贴安装</b>，贴墙贴地即可。方向不对就拿着扳手_shift 右键重新调整。</p></div>
+      <div class="feat"><div class="ico c2">2️⃣</div><h4>供电（真实版）</h4><p><code>_real</code> 真实版显示屏需要电源：HE 缓冲仓或 FE 供电端子<b>任一有电即可</b>（HE 优先）。屏面会显示当前电源来源；断电时黑屏显示提示文字，恢复供电自动续录，历史不丢。</p></div>
+      <div class="feat"><div class="ico c3">3️⃣</div><h4>连接数据源</h4><p>拿<b>数据线缆</b>从 RBMK 控制面板 / 蒸汽室等多方块结构连到屏幕背面，右键屏幕选择要显示的页（总览 / 热图 / 自定义 / 曲线）。一块屏可绑多个数据源，热图页自动按燃料棒布局分格。</p></div>
+      <div class="feat"><div class="ico c4">4️⃣</div><h4>自动记录</h4><p>曲线屏<b>放置那一刻就开始记录</b>，不需要有人盯着屏。每 15 秒批量落盘到 <code>rbmk_history/</code>；区块卸载、服务器重启都接续记录，断电只冻结不丢档。</p></div>
+      <div class="feat"><div class="ico c5">5️⃣</div><h4>导出成果</h4><p>打开曲线页 GUI 的导出入口，像剪映一样<b>框选时间段</b>：导出 PNG 帧序列 / CSV 数据 / MP4 视频（装 JavaCV 依赖才可导 MP4，未装自动降级 PNG zip），导出 GUI 内可直接播放预览。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 进阶玩法 ============ -->
+<section class="soft">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-kicker">Advanced</div>
+      <h2>进阶玩法</h2>
+    </div>
+    <div class="faq">
+      <details>
+        <summary>搭一间完整中控室需要哪些方块？</summary>
+        <p>推荐配置：<b>监控大屏 ×N</b>（总览/热图/曲线各一）+ <b>落地终端 ×1</b>（大屏同步显示命令输出）+ <b>报警灯塔 ×1</b>（随报警等级变色鸣响）+ <b>轮播屏 ×1</b>（自动轮翻三页）+ <b>巡屏面板 ×1</b>（聚合全厂屏幕逐个查看）。再配手持遥控器即可坐镇中控遥控 SCRAM。</p>
+      </details>
+      <details>
+        <summary>遥控 SCRAM 怎么用？</summary>
+        <p>手持<b>遥控器</b>对准任意一块已连接的显示屏<b>右键</b>，即向绑定的反应堆发送紧急停堆指令；操作写入 <code>rbmk_audit.log</code> 审计日志（谁、何时、停了哪个堆）。终端里也可用 <code>scram &lt;堆名&gt;</code> 达成同样效果。</p>
+      </details>
+      <details>
+        <summary>终端管道命令怎么玩？</summary>
+        <p>落地终端 / 便携终端支持管道：<code>status | filter heat &gt; 800</code> 只看高温堆、<code>status | sort flux | head 5</code> 看通量前五。支持宏指令把常用命令串成一键执行、密码握手保护危险操作。完整命令表见<a href="commands.html">命令速查页</a>。</p>
+      </details>
+      <details>
+        <summary>历史数据存在哪？能迁移吗？</summary>
+        <p>存在游戏目录 <code>rbmk_history/</code>（按屏幕维度分文件）。把文件随存档一起拷走即可迁移；服务器管理员可整目录备份。18.1 起新放置的屏从放置瞬间开始积累，17.x 老屏升级后沿用已有历史。</p>
+      </details>
+      <details>
+        <summary>游戏内有没有教程？</summary>
+        <p>有——三卷《持证必读》手册（合成或创造模式拿），从放置接线、供电配置到终端命令全覆盖，固件横幅与模组版本同步更新。装好模组后建议先翻第一卷。</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="f-links">
+      <a href="download.html">下载中心</a>
+      <a href="https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor" target="_blank">GitHub · 原版线</a>
+      <a href="https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor-reset" target="_blank">GitHub · 重置版</a>
+      <a href="https://gitee.com/baldih/jiezhi-and-baldih-rbmk-monitor" target="_blank">Gitee · 原版线</a>
+      <a href="https://gitee.com/baldih/jiezhi-and-baldih-rbmk-monitor-reset" target="_blank">Gitee · 重置版</a>
+      <a href="https://space.bilibili.com/3494363348863838" target="_blank">原作者主页</a>
+    </div>
+    <p class="credit-line">原作者：<b>树上的节枝（jiezhi）</b> · 本作品基于节枝特效工具 JiezhiMod 二次创作 · <a href="about.html">署名声明</a></p>
+    <p>仅供 Minecraft 游戏娱乐，与任何现实核设施无关 · License MPL-2.0</p>
+  </div>
+</footer>
+
+<script src="assets/main.js"></script>
+</body>
+</html>

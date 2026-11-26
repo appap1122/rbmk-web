@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>截图画廊 · RBMK 显示屏</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="assets/favicon-48.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
+<link rel="shortcut icon" href="assets/favicon.ico">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="logo" href="index.html"><img class="logo-img" src="assets/mark-badge-light-64.png" alt="RBMK MONITOR 徽标"><img class="logo-img dark-only" src="assets/mark-badge-dark-64.png" alt="RBMK MONITOR 徽标">RBMK 显示屏</a>
+    <nav class="links">
+      <a href="index.html">首页</a>
+      <a href="features.html">功能</a>
+      <a href="guide.html">教程</a>
+      <a href="screenshots.html">截图</a>
+      <a href="download.html">下载</a>
+      <a href="install.html">安装</a>
+      <a href="commands.html">命令</a>
+      <a href="faq.html">FAQ</a>
+      <a href="changelog.html">日志</a>
+      <a href="about.html">署名</a>
+    </nav>
+    <button class="theme-btn" id="themeBtn" title="切换 明/暗 主题" aria-label="切换主题">🌙</button>
+  </div>
+</header>
+
+<div class="page-hero">
+  <i class="glow g1"></i><i class="glow g2"></i>
+  <div class="wrap inner">
+    <h1>截图<span class="gtext">画廊</span></h1>
+    <p class="sub">六张示意图一览游戏内画面（游戏内为 768×576 实时动态渲染，此处为静态示意）。</p>
+  </div>
+</div>
+
+<!-- ============ 画廊 ============ -->
+<section style="padding-top:20px">
+  <div class="wrap">
+    <div class="prev-grid">
+      <div class="prev-card">
+        <svg viewBox="0 0 384 216" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="总览页示意">
+          <rect width="384" height="216" fill="#0d1420"/>
+          <text x="16" y="24" fill="#8fb4e8" font-size="12" font-family="monospace">RBMK MONITOR · 总览</text>
+          <line x1="0" y1="34" x2="384" y2="34" stroke="#1e2c44" stroke-width="1"/>
+          <g font-family="monospace" font-size="11">
+            <rect x="16" y="46" width="168" height="46" rx="3" fill="#13203a"/>
+            <text x="26" y="64" fill="#5f7ba6">堆芯均温</text>
+            <text x="26" y="82" fill="#ffb347" font-size="16" font-weight="bold">612.4 °C</text>
+            <rect x="200" y="46" width="168" height="46" rx="3" fill="#13203a"/>
+            <text x="210" y="64" fill="#5f7ba6">中子通量</text>
+            <text x="210" y="82" fill="#6ee7a0" font-size="16" font-weight="bold">8.42 kN</text>
+            <rect x="16" y="100" width="168" height="46" rx="3" fill="#13203a"/>
+            <text x="26" y="118" fill="#5f7ba6">水存量</text>
+            <text x="26" y="136" fill="#6ec3ff" font-size="16" font-weight="bold">96 %</text>
+            <rect x="200" y="100" width="168" height="46" rx="3" fill="#13203a"/>
+            <text x="210" y="118" fill="#5f7ba6">蒸汽产出</text>
+            <text x="210" y="136" fill="#6ee7a0" font-size="16" font-weight="bold">12.7 kB/s</text>
+          </g>
+          <rect x="16" y="156" width="352" height="44" rx="3" fill="#13203a"/>
+          <text x="26" y="174" fill="#5f7ba6" font-size="11" font-family="monospace">燃料棒 16/16 · 状态</text>
+          <rect x="220" y="163" width="70" height="16" rx="8" fill="#134e2f"/>
+          <text x="255" y="175" fill="#6ee7a0" font-size="10" text-anchor="middle" font-family="monospace">正常</text>
+          <rect x="298" y="163" width="58" height="16" rx="8" fill="#3a2a13"/>
+          <text x="327" y="175" fill="#ffb347" font-size="10" text-anchor="middle" font-family="monospace">氙 14%</text>
+        </svg>
+        <h4>总览页</h4><p>均温 / 通量 / 水 / 蒸汽四大仪表 + 燃料棒状态与氙毒累积。</p>
+      </div>
+      <div class="prev-card">
+        <svg viewBox="0 0 384 216" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="热图页示意">
+          <rect width="384" height="216" fill="#0d1420"/>
+          <text x="16" y="24" fill="#8fb4e8" font-size="12" font-family="monospace">RBMK MONITOR · 热图</text>
+          <line x1="0" y1="34" x2="384" y2="34" stroke="#1e2c44" stroke-width="1"/>
+          <g>
+            <rect x="56" y="48" width="40" height="40" fill="#3b6fd4"/><rect x="104" y="48" width="40" height="40" fill="#2ea36c"/>
+            <rect x="152" y="48" width="40" height="40" fill="#f2c53d"/><rect x="200" y="48" width="40" height="40" fill="#e8792f"/>
+            <rect x="248" y="48" width="40" height="40" fill="#c93b2f"/><rect x="296" y="48" width="40" height="40" fill="#2ea36c"/>
+            <rect x="56" y="96" width="40" height="40" fill="#2ea36c"/><rect x="104" y="96" width="40" height="40" fill="#f2c53d"/>
+            <rect x="152" y="96" width="40" height="40" fill="#e8792f"/><rect x="200" y="96" width="40" height="40" fill="#c93b2f"/>
+            <rect x="248" y="96" width="40" height="40" fill="#f2c53d"/><rect x="296" y="96" width="40" height="40" fill="#3b6fd4"/>
+            <rect x="56" y="144" width="40" height="40" fill="#2ea36c"/><rect x="104" y="144" width="40" height="40" fill="#3b6fd4"/>
+            <rect x="152" y="144" width="40" height="40" fill="#2ea36c"/><rect x="200" y="144" width="40" height="40" fill="#f2c53d"/>
+            <rect x="248" y="144" width="40" height="40" fill="#3b6fd4"/><rect x="296" y="144" width="40" height="40" fill="#2ea36c"/>
+          </g>
+          <g font-family="monospace" font-size="9" fill="#9aa7bd">
+            <text x="76" y="70" text-anchor="middle">412</text><text x="124" y="70" text-anchor="middle">386</text>
+            <text x="172" y="70" text-anchor="middle">545</text><text x="220" y="70" text-anchor="middle">688</text>
+            <text x="268" y="70" text-anchor="middle">931</text><text x="316" y="70" text-anchor="middle">394</text>
+          </g>
+          <g font-size="10" font-family="monospace">
+            <rect x="16" y="196" width="12" height="10" fill="#3b6fd4"/><text x="32" y="205" fill="#9aa7bd">低温</text>
+            <rect x="70" y="196" width="12" height="10" fill="#2ea36c"/><text x="86" y="205" fill="#9aa7bd">正常</text>
+            <rect x="124" y="196" width="12" height="10" fill="#f2c53d"/><text x="140" y="205" fill="#9aa7bd">偏热</text>
+            <rect x="178" y="196" width="12" height="10" fill="#e8792f"/><text x="194" y="205" fill="#9aa7bd">高温</text>
+            <rect x="232" y="196" width="12" height="10" fill="#c93b2f"/><text x="248" y="205" fill="#9aa7bd">危险</text>
+          </g>
+        </svg>
+        <h4>热图页</h4><p>每根燃料棒一格，色阶直读温度分布，过热棒一眼锁定。</p>
+      </div>
+      <div class="prev-card">
+        <svg viewBox="0 0 384 216" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="曲线页示意">
+          <rect width="384" height="216" fill="#0d1420"/>
+          <text x="16" y="24" fill="#8fb4e8" font-size="12" font-family="monospace">RBMK MONITOR · 曲线（60s 窗口）</text>
+          <line x1="0" y1="34" x2="384" y2="34" stroke="#1e2c44" stroke-width="1"/>
+          <g stroke="#1a2740" stroke-width="1">
+            <line x1="40" y1="60" x2="360" y2="60"/><line x1="40" y1="100" x2="360" y2="100"/>
+            <line x1="40" y1="140" x2="360" y2="140"/><line x1="40" y1="180" x2="360" y2="180"/>
+          </g>
+          <g font-family="monospace" font-size="9" fill="#5f7ba6">
+            <text x="34" y="64" text-anchor="end">800</text><text x="34" y="104" text-anchor="end">600</text>
+            <text x="34" y="144" text-anchor="end">400</text><text x="34" y="184" text-anchor="end">200</text>
+          </g>
+          <polyline points="40,150 64,146 88,140 112,132 136,120 160,96 178,178 182,178 186,110 210,104 234,98 258,90 282,84 306,78 330,72 360,66"
+                    fill="none" stroke="#ffb347" stroke-width="2"/>
+          <polyline points="40,168 64,166 88,162 112,158 136,152 160,148 184,150 208,146 232,142 256,138 280,134 304,130 328,126 360,122"
+                    fill="none" stroke="#6ec3ff" stroke-width="2"/>
+          <line x1="178" y1="52" x2="178" y2="180" stroke="#4b5568" stroke-dasharray="3 3" stroke-width="1"/>
+          <text x="178" y="196" fill="#8a93a8" font-size="9" text-anchor="middle" font-family="monospace">断口</text>
+          <g font-size="10" font-family="monospace">
+            <rect x="52" y="42" width="12" height="10" fill="#ffb347"/><text x="68" y="51" fill="#9aa7bd">均温</text>
+            <rect x="110" y="42" width="12" height="10" fill="#6ec3ff"/><text x="126" y="51" fill="#9aa7bd">通量</text>
+          </g>
+        </svg>
+        <h4>曲线页</h4><p>温度 / 通量实时曲线，断链离线留下真断口（不连线伪造），历史黑匣子可回放导出。</p>
+      </div>
+      <div class="prev-card">
+        <svg viewBox="0 0 384 216" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="终端示意">
+          <rect width="384" height="216" fill="#05080d"/>
+          <text x="16" y="24" fill="#39d353" font-size="12" font-family="monospace">rbmk-terminal [v18.1] ▮</text>
+          <line x1="0" y1="34" x2="384" y2="34" stroke="#123320" stroke-width="1"/>
+          <g font-family="monospace" font-size="11" fill="#39d353">
+            <text x="16" y="56">&gt; status | filter heat &gt; 600</text>
+            <text x="16" y="78" fill="#8fb4e8">RBMK-1  heat 612.4  flux 8.42k  [WARN]</text>
+            <text x="16" y="96" fill="#8fb4e8">RBMK-4  heat 931.0  flux 6.10k  [HOT]</text>
+            <text x="16" y="122" fill="#39d353">&gt; macro run scram-drill</text>
+            <text x="16" y="144" fill="#8fb4e8">→ 2 matched · runtime 0.4s</text>
+            <text x="16" y="170" fill="#ffb347">&gt; scram RBMK-4</text>
+            <text x="16" y="192" fill="#ff6b6b">SCRAM confirmed · rods dropped · logged</text>
+          </g>
+        </svg>
+        <h4>终端</h4><p>落地终端 / 便携终端：管道过滤、宏指令、遥控 SCRAM，全程写入审计日志。</p>
+      </div>
+      <div class="prev-card">
+        <svg viewBox="0 0 384 216" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="断电提示示意">
+          <rect width="384" height="216" fill="#000000"/>
+          <text x="192" y="92" fill="#ff6b6b" font-size="14" text-anchor="middle" font-family="monospace" font-weight="bold">真实版曲线显示屏断电，无法记录</text>
+          <text x="192" y="120" fill="#8a93a8" font-size="11" text-anchor="middle" font-family="monospace">恢复供电后自动继续记录</text>
+          <line x1="140" y1="140" x2="244" y2="140" stroke="#222" stroke-width="1"/>
+          <text x="192" y="162" fill="#555" font-size="9" text-anchor="middle" font-family="monospace">[HE 优先 · FE 备用 · 历史已冻结]</text>
+        </svg>
+        <h4>断电提示</h4><p>真实版屏断电黑屏留字：恢复供电自动续录，历史不丢档、不挤光。</p>
+      </div>
+      <div class="prev-card">
+        <svg viewBox="0 0 384 216" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="报警灯塔示意">
+          <rect width="384" height="216" fill="#0d1420"/>
+          <text x="16" y="24" fill="#8fb4e8" font-size="12" font-family="monospace">ALARM BEACON · 报警灯塔</text>
+          <line x1="0" y1="34" x2="384" y2="34" stroke="#1e2c44" stroke-width="1"/>
+          <g>
+            <rect x="182" y="60" width="20" height="14" fill="#2a2f3a"/>
+            <rect x="182" y="74" width="20" height="26" fill="#ff5252">
+              <animate attributeName="opacity" values="1;0.25;1" dur="1.4s" repeatCount="indefinite"/>
+            </rect>
+            <rect x="182" y="100" width="20" height="26" fill="#ffb347"/>
+            <rect x="186" y="126" width="12" height="58" fill="#3a4356"/>
+            <circle cx="192" cy="87" r="46" fill="#ff5252" opacity="0.12">
+              <animate attributeName="r" values="40;56;40" dur="1.4s" repeatCount="indefinite"/>
+            </circle>
+          </g>
+          <g font-family="monospace" font-size="10" fill="#9aa7bd">
+            <text x="16" y="60" fill="#ff6b6b">● LEVEL-3 危险</text>
+            <text x="16" y="80">堆芯均温 931 °C</text>
+            <text x="16" y="100">RBMK-4 · 燃料棒 #7 过热</text>
+            <text x="16" y="132" fill="#39d353">&gt; 建议操作：scram RBMK-4</text>
+            <text x="16" y="152" fill="#39d353">&gt; 或按住遥控器对准屏幕右键</text>
+          </g>
+          <text x="368" y="200" fill="#555" font-size="9" text-anchor="end" font-family="monospace">audible · logged</text>
+        </svg>
+        <h4>报警灯塔</h4><p>报警等级变色鸣响，中控室氛围拉满；每一次触发都进审计日志。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="f-links">
+      <a href="download.html">下载中心</a>
+      <a href="https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor" target="_blank">GitHub · 原版线</a>
+      <a href="https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor-reset" target="_blank">GitHub · 重置版</a>
+      <a href="https://gitee.com/baldih/jiezhi-and-baldih-rbmk-monitor" target="_blank">Gitee · 原版线</a>
+      <a href="https://gitee.com/baldih/jiezhi-and-baldih-rbmk-monitor-reset" target="_blank">Gitee · 重置版</a>
+      <a href="https://space.bilibili.com/3494363348863838" target="_blank">原作者主页</a>
+    </div>
+    <p class="credit-line">原作者：<b>树上的节枝（jiezhi）</b> · 本作品基于节枝特效工具 JiezhiMod 二次创作 · <a href="about.html">署名声明</a></p>
+    <p>仅供 Minecraft 游戏娱乐，与任何现实核设施无关 · License MPL-2.0</p>
+  </div>
+</footer>
+
+<script src="assets/main.js"></script>
+</body>
+</html>
