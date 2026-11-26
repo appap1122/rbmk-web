@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-26T11:40:13.360Z",
+  "updated_at": "2026-11-26T14:55:29.644Z",
   "sources": [
     {
       "platform": "gitee",
@@ -1174,6 +1174,111 @@
       }
     ],
     "appap1122/jiezhi-and-baldih-rbmk-monitor": [
+      {
+        "tag": "15.3",
+        "name": "v15.3",
+        "notes": "## 🚀 RBMK-Monitor v15.3 更新日志\r\n\r\n本次更新主要针对多媒体功能的跨平台兼容性进行了严谨的提示与修复，并同步了系统版本号。\r\n\r\n### 🛡️ 跨平台兼容性优化\r\n*   **明确的系统警告**：在多媒体依赖引导弹窗（GuiMediaInstallPrompt）中，新增了极其醒目的黄色警告文字：`[警告] 当前多媒体解码库仅支持 Windows 64 位系统。Mac/Linux 玩家请勿下载，否则可能导致游戏崩溃。`\r\n*   **UI 排版自适应**：调整了弹窗高度和文字排版，确保新增的警告文字不会遮挡下方的【立即前往下载】与【暂不安装】按钮。\r\n*   **README 同步更新**：在文档中明确标注了多媒体功能仅支持 Windows 64 位（x86_64）。Mac/Linux 玩家虽然无法播放多媒体，但中控、红石、黑客等其他核心功能完全不受影响。\r\n\r\n### 🐛 底层修复与细节优化\r\n*   **版本号统一**：将 `build.gradle`、`RbmkMonitorMod.java`、`GuiTerminal.java` 中的版本号统一升级至 `15.3`，确保终端启动横幅与模组版本一致。\r\n*   **渲染安全**：修复了文字颜色代码的渲染逻辑，确保黄色警告文字在任何分辨率下都能清晰可见。\r\n\r\n### 📦 安装与前置要求\r\n1. 游戏版本：**Minecraft 1.12.2**\r\n2. 加载器：**Forge 14.23.5.2859+**\r\n3. 前置模组：**无强制前置**（HBM NTM-CE 为可选前置）。\r\n4. **多媒体依赖**：Windows 玩家请前往 Release 附件下载 `RBMK-Media-Deps-Windows.zip`，解压后与主模组一起放入 `.minecraft/mods/` 文件夹。\r\n\r\n### ⚖️ 开源与授权说明\r\n*   本项目遵循 **MPL-2.0** 开源协议。\r\n*   本项目基于 **树上的节枝 (Jiezhi)** 的源码进行二创，已保留全部授权声明。\n\n---\n*（本发行版由 Gitee 发行版自动同步迁移而来）*",
+        "prerelease": false,
+        "date": "2026-11-26T12:46:06Z",
+        "htmlUrl": "https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor/releases/tag/15.3",
+        "assets": [
+          {
+            "name": "15.3ForgeGradle-example-master.zip",
+            "url": "https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor/releases/download/15.3/15.3ForgeGradle-example-master.zip",
+            "size": 4091604
+          },
+          {
+            "name": "RBMK-Monitor-15.3.jar",
+            "url": "https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor/releases/download/15.3/RBMK-Monitor-15.3.jar",
+            "size": 617779
+          }
+        ]
+      },
+      {
+        "tag": "15.1",
+        "name": "v15.1",
+        "notes": "## 🚀 RBMK-Monitor v15.1 更新日志\r\n\r\n本次更新为终端系统带来了极其硬核的【远程红石超控】功能，并针对服务器性能进行了深度的防卡死重构。\r\n\r\n### 🎛️ 核心新增：远程红石超控 (Redstone Command)\r\n*   **隔空操作**：在终端输入 `redstone <X> <Y> <Z> <强度>`，即可直接向指定坐标输出 0-15 强度的红石信号。\r\n*   **合法性校验**：严格限制 X/Z 坐标范围（±3000万）、Y 轴高度（0-255）以及红石强度（0-15），非法输入直接拦截。\r\n*   **跨维度限制**：目标区块未加载时直接拒绝操作，防止服务器因强制加载区块而卡死。\r\n\r\n### 🛡️ 史诗级防卡死保护 (Anti-Lag Protection)\r\n*   **方块更新死循环防护**：使用 `world.setBlockState(..., 2)` 仅同步客户端，并加入 250ms 同坐标冷却机制，彻底杜绝红石连锁更新导致的服务器 TPS 暴跌。\r\n*   **防误拆/误覆盖**：加入了 `isRemoteRedstoneAt` 记录匹配。系统只会清除或改写由屏幕自己铺设的红石，绝不破坏玩家原有的红石电路。\r\n*   **主线程安全隔离**：所有远程红石操作均在 `MinecraftServer.addScheduledTask()` 主线程中执行，网络线程安全无隐患。\r\n*   **空指针保护**：新增的 NBT 字段（RRX/RRY/RRZ/RRS）全部使用了 `hasKey` 和默认值兜底，防止未绑定时抛出 NPE。\r\n\r\n### ⚠️ 终端指令说明\r\n*   输入 `redstone 100 64 -200 15`：在坐标 (100, 64, -200) 处输出满格红石信号。\r\n*   输入 `redstone 100 64 -200 0`：清除该坐标的红石信号。\r\n*   输入乱码（如 `redstone a b c d`）时，客户端会通过 `try-catch` 捕获异常，只红字提示，绝不崩溃。\r\n\r\n### 📦 安装与前置要求\r\n1. 游戏版本：**Minecraft 1.12.2**\r\n2. 加载器：**Forge 14.23.5.2859+**\r\n3. 前置模组：**无强制前置**（HBM NTM-CE 为可选前置）。\r\n4. 将下载的 `.jar` 文件放入 `.minecraft/mods` 文件夹即可。\r\n\r\n### ⚖️ 开源与授权说明\r\n*   本项目遵循 **MPL-2.0** 开源协议。\r\n*   本项目基于 **树上的节枝 (Jiezhi)** 的源码进行二创，已保留全部授权声明。\n\n---\n*（本发行版由 Gitee 发行版自动同步迁移而来）*",
+        "prerelease": false,
+        "date": "2026-11-26T12:08:11Z",
+        "htmlUrl": "https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor/releases/tag/15.1",
+        "assets": [
+          {
+            "name": "15.1ForgeGradle-example-master.rar",
+            "url": "https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor/releases/download/15.1/15.1ForgeGradle-example-master.rar",
+            "size": 3750073
+          },
+          {
+            "name": "RBMK-Monitor-15.1.jar",
+            "url": "https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor/releases/download/15.1/RBMK-Monitor-15.1.jar",
+            "size": 590234
+          }
+        ]
+      },
+      {
+        "tag": "15.2-beta",
+        "name": "v15.2-beta",
+        "notes": "## 🚀 RBMK-Monitor v15.2-beta 更新日志\r\n\r\n本次更新为多媒体功能加入了极其贴心且硬核的“依赖引导”机制，彻底杜绝玩家因缺失解码库而导致游戏卡死或闪退的糟糕体验。\r\n\r\n### 🖥️ 核心新增：进游戏智能弹窗引导\r\n*   **自动检测**：玩家进入世界时，客户端会自动检测是否安装了多媒体解码库（JavaCV）。\r\n*   **详尽提示**：如果未安装，会弹出一个赛博风界面，明确告知玩家【不安装的后果】（无法播放音视频，仅显示 `[UNSUPPORTED CODEC]`，但不影响其他中控功能）。\r\n*   **一键下载**：点击【立即前往 Gitee 下载】按钮，会自动唤起系统默认浏览器打开发行版页面。即使系统没有浏览器，也会在聊天栏红字提示手动访问，绝不崩溃。\r\n\r\n### 🛡️ 极致防卡死与防打扰机制\r\n*   **全生命周期单次检测**：使用 `Class.forName` 静态缓存和 `mediaPromptChecked` 标记，确保每次进入世界只检测一次，绝不卡顿。\r\n*   **“不再提示”持久化**：点击“不再提示”后，状态会写入 `.minecraft/config/jiezhirbmkmod_media.properties`。下次进游戏绝对不会再烦你。\r\n*   **终端指令联动**：以后想安装了随时在终端输入 `media install`，即可重新唤出下载引导界面。\r\n\r\n### 🐛 底层修复与细节优化\r\n*   修复了 GUI 弹窗无法用 ESC 关闭的问题，确保玩家随时可以退回游戏。\r\n*   修复了浏览器唤起时的潜在空指针异常，全量包裹 `try-catch`。\r\n*   完善了 `GuiTerminal` 的指令解析逻辑，确保 `media install` 能无缝切换界面。\r\n\r\n### ⚠️ 版本说明（Beta 测试）\r\n*   本版本为 **Beta 测试版**，主要是为了测试新的依赖检测机制和弹窗 UI。\r\n*   若玩家需要使用多媒体功能，请前往 Gitee 的 Release 附件中手动下载并安装 `JavaCV` 依赖包。\r\n\r\n### 📦 安装与前置要求\r\n1. 游戏版本：**Minecraft 1.12.2**\r\n2. 加载器：**Forge 14.23.5.2859+**\r\n3. 前置模组：**无强制前置**（HBM NTM-CE 为可选前置）。\r\n4. 将下载的 `.jar` 文件放入 `.minecraft/mods` 文件夹即可。\r\n\r\n\n\n---\n*（本发行版由 Gitee 发行版自动同步迁移而来）*",
+        "prerelease": true,
+        "date": "2026-11-26T12:35:30Z",
+        "htmlUrl": "https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor/releases/tag/15.2-beta",
+        "assets": [
+          {
+            "name": "15.2-ForgeGradle-example-master.rar",
+            "url": "https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor/releases/download/15.2-beta/15.2-ForgeGradle-example-master.rar",
+            "size": 3765161
+          },
+          {
+            "name": "RBMK-Media-Deps-Windows.zip",
+            "url": "https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor/releases/download/15.2-beta/RBMK-Media-Deps-Windows.zip",
+            "size": 18160265
+          },
+          {
+            "name": "RBMK-Monitor-15.2-beta.jar",
+            "url": "https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor/releases/download/15.2-beta/RBMK-Monitor-15.2-beta.jar",
+            "size": 616055
+          }
+        ]
+      },
+      {
+        "tag": "15.0-beta",
+        "name": "v15.0-beta",
+        "notes": "## 🚀 RBMK-Monitor v15.0 正式版更新日志\r\n\r\n跨入 15.0 时代！本次更新将你的中控系统升级为“服务器级网络通讯终端”，并引入了硬核的防熊孩子安全锁机制。\r\n\r\n### 💻 核心新增：跨维度文字通讯 (Msg 指令)\r\n*   **远程通讯**：在终端输入 `msg <玩家ID> <内容>`，只要目标玩家附近 32 格内有你的屏幕，就能瞬间收到跨维度的加密电文。\r\n*   **安全防刷屏**：单条消息严格限制在 30 个字符以内，防止恶意玩家刷屏导致服务器/客户端卡顿。\r\n*   **NBT 持久化**：接收到的消息会存入屏幕的 NBT 数据中，哪怕区块卸载重载，历史消息也不会消失。\r\n\r\n### 🛡️ 核心新增：防熊孩子安全码锁 (Password 指令)\r\n*   **终端上锁**：屏幕主人可以在终端输入 `password <4位数字>`，给屏幕加上一层专属密码。\r\n*   **黑客拦截**：当其他玩家尝试使用 `hack` 指令黑入你的屏幕时，会被系统强制拦截。对方必须输入 `auth <4位数字>` 通过验证，才能成功入侵。\r\n*   **空值保护**：未设置密码的屏幕依然保持自由开放，且系统做了极其严格的 NBT 空指针防护，绝不崩溃。\r\n\r\n### 🔧 底层架构与性能优化\r\n*   **线程安全隔离**：新增的 `MessageRbmkTerminalComm` 网络包，在服务端处理时严格使用了 `MinecraftServer.addScheduledTask()` 调度回主线程，彻底杜绝网络线程并发修改世界的崩溃隐患。\r\n*   **异常兜底**：在服务端处理中加入了 `server == null` 判空与完整的 `try-catch`，保证异常不会顺坏整个 Netty 网络线程。\r\n\r\n### 📦 安装与前置要求\r\n1. 游戏版本：**Minecraft 1.12.2**\r\n2. 加载器：**Forge 14.23.5.2859+**\r\n3. 前置模组：**无强制前置**（HBM NTM-CE 为可选前置）。\r\n4. 将下载的 `.jar` 文件放入 `.minecraft/mods` 文件夹即可。\n\n---\n*（本发行版由 Gitee 发行版自动同步迁移而来）*",
+        "prerelease": true,
+        "date": "2026-11-26T11:51:44Z",
+        "htmlUrl": "https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor/releases/tag/15.0-beta",
+        "assets": [
+          {
+            "name": "15.0-ForgeGradle-example-master.rar",
+            "url": "https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor/releases/download/15.0-beta/15.0-ForgeGradle-example-master.rar",
+            "size": 3910714
+          },
+          {
+            "name": "RBMK-Monitor-15.0.jar",
+            "url": "https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor/releases/download/15.0-beta/RBMK-Monitor-15.0.jar",
+            "size": 586075
+          }
+        ]
+      },
+      {
+        "tag": "14.1-hotfix-beta",
+        "name": "v14.1-hotfix-beta",
+        "notes": "## 🛠️ RBMK-Monitor v14.1 正式版更新日志\r\n\r\n本次更新为紧急视觉修复版本，重点解决了多方块渲染丢失（紫黑块）以及自定义 GUI 界面显示不全的问题。\r\n\r\n### 🐛 视觉修复：彻底消灭紫黑块\r\n*   **网络路由器 (BlockRbmkRouter)**：\r\n    *   重写了 blockstates 和 models 文件，修复了放置后变成紫黑块的 Bug。\r\n    *   目前暂时使用原版铁块模型作为占位，保证方块在游戏内可见。\r\n*   **终端大屏 (BlockRbmkTermScreen)**：\r\n    *   重写了 `rbmk_term_screen.json`，补齐了所有 facing 和 powered 状态（共 8 种）。\r\n    *   将模型改为独立的 `cube_all`，不再依赖损坏的父模型。\r\n    *   自动复制物品图标作为独立贴图，彻底告别紫黑块！\r\n\r\n### 🖥️ GUI 界面修复：自定义显示屏\r\n*   **坐标修复**：将 `guiLeft` / `guiTop` 限制为非负值，解决了在小分辨率下左侧设备列表被裁掉一半的问题。\r\n*   **空值保护**：在 `TileCustomScreen` 和 `GuiCustomScreen` 的 `update` 和 `slots()` 逻辑中加入了严格的判空保护，防止读取未绑定数据时崩溃。\r\n*   **对齐优化**：设备数量改为在左侧面板内右对齐，列表读数限制在半行内，避免压住删除按钮。\r\n\r\n### 🔧 模型绑定重构\r\n*   清理了客户端代理（`RbmkClientProxy`）中冗余的模型注册代码，改为在 `onModelRegistry` 中统一精准绑定，提升了加载效率。\r\n\r\n### 📦 安装与前置要求\r\n1. 游戏版本：**Minecraft 1.12.2**\r\n2. 加载器：**Forge 14.23.5.2859+**\r\n3. 前置模组：**无强制前置**（HBM NTM-CE 为可选前置）。\r\n4. 将下载的 `.jar` 文件放入 `.minecraft/mods` 即可。\r\n**完整的更新日志**: https://gitee.com/baldih/jiezhi-and-baldih-rbmk-monitor/compare/14.0-beta...14.1-hotfix-beta\r\n\n\n---\n*（本发行版由 Gitee 发行版自动同步迁移而来）*",
+        "prerelease": true,
+        "date": "2026-11-26T11:44:16Z",
+        "htmlUrl": "https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor/releases/tag/14.1-hotfix-beta",
+        "assets": [
+          {
+            "name": "14.1ForgeGradle-example-master.rar",
+            "url": "https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor/releases/download/14.1-hotfix-beta/14.1ForgeGradle-example-master.rar",
+            "size": 1106802
+          },
+          {
+            "name": "RBMK-Monitor-14.1.jar",
+            "url": "https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor/releases/download/14.1-hotfix-beta/RBMK-Monitor-14.1.jar",
+            "size": 575247
+          }
+        ]
+      },
       {
         "tag": "14.0-beta",
         "name": "v14.0-beta",
