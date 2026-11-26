@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-25T22:58:51.131Z",
+  "updated_at": "2026-11-26T04:55:58.992Z",
   "sources": [
     {
       "platform": "gitee",
@@ -1175,17 +1175,26 @@
     ],
     "appap1122/jiezhi-and-baldih-rbmk-monitor": [
       {
-        "tag": "v18.1",
-        "name": "RBMK 显示屏 v18.1",
-        "notes": "## RBMK 显示屏 v18.1（原版线）\n\nMinecraft **1.12.2** · Forge **14.23.5.2860** · 依赖 **HBM 核技术（Nuclear Tech Mod）** · modid `jiezhirbmkmod`\n\n### 本版本亮点\n\n- **曲线历史放置即自动记录**：屏一放置/区块一加载就开始采样，不再依赖有人看屏停在曲线页\n- **真实版断电黑屏提示**：HE/FE 全空时显示「真实版曲线显示屏断电，无法记录」，恢复供电自动续录\n- **历史冻结防丢档**：断电/待机期间采样器冻结，黑匣子历史与 `rbmk_history/` 落盘文件永久保留\n- 剪辑式部分导出 GUI（像剪映：白色选框 + 播放/暂停 + 大预览）+ PNG 序列 / CSV / **MP4 视频**导出\n- 操作审计日志（`rbmk_audit.log`）、终端管道过滤与宏、画面轮播屏\n- 真实版 HE·FE 双源供电（HE 优先，FE 兜底，1 FE 当量 = 10 HE）\n\n### 安装\n\n1. jar 放入 `mods/`，需与 HBM 同装\n2. ⚠️ 多人游戏两端必须同一版本；升级前删光旧版 jar 并备份存档\n3. ⚠️ 不要与重置版（modid `rbmkdisplay`）同装\n\n### 署名\n\n原作者：**树上的节枝（jiezhi）** · [原作者主页](https://space.bilibili.com/3494363348863838) · 本作品基于节枝特效工具 [JiezhiMod](https://gitee.com/yi-sichen-jiezhi/DFC-Map-Creation-Tool) 二次创作\n",
+        "tag": "1.0.1",
+        "name": "jiezhi-rbmk-monitor-1.12.2-1.0.1-rbmk",
+        "notes": "jiezhi-rbmk-monitor-1.12.2-1.0.1-rbmk for  _MC HBM 1.12.2_ \n\n---\n*（本发行版由 Gitee 发行版自动同步迁移而来）*",
         "prerelease": false,
-        "date": "2026-11-25T05:06:19Z",
-        "htmlUrl": "https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor/releases/tag/v18.1",
+        "date": "2026-11-26T04:52:06Z",
+        "htmlUrl": "https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor/releases/tag/1.0.1",
+        "assets": []
+      },
+      {
+        "tag": "1.0.0",
+        "name": "jiezhi-rbmk-monitor-1.12.2-1.0.0-rbmk",
+        "notes": "改变树上的节枝的jar，原作者bilibili：https://space.bilibili.com/3494363348863838\r\n本作品基于节枝特效工具 JiezhiMod 二次创作\r\n\n\n---\n*（本发行版由 Gitee 发行版自动同步迁移而来）*",
+        "prerelease": false,
+        "date": "2026-11-26T04:30:45Z",
+        "htmlUrl": "https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor/releases/tag/1.0.0",
         "assets": [
           {
-            "name": "RBMK-Monitor-18.1.jar",
-            "url": "https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor/releases/download/v18.1/RBMK-Monitor-18.1.jar",
-            "size": 1625050
+            "name": "jiezhi-rbmk-monitor-1.12.2-1.0.0-rbmk.jar",
+            "url": "https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor/releases/download/1.0.0/jiezhi-rbmk-monitor-1.12.2-1.0.0-rbmk.jar",
+            "size": 117827
           }
         ]
       }
