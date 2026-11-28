@@ -1,0 +1,20 @@
+# Cloudflare Pages 响应头（GitHub Pages 会忽略本文件，不影响线上）
+# 静态资源长缓存、页面每次回源校验，避免同步完数据还看到旧页面。
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+
+/assets/*
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+
+/data/*
+  Cache-Control: public, max-age=60, must-revalidate
+
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/downloads/*
+  Cache-Control: public, max-age=86400

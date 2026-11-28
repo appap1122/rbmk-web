@@ -1,0 +1,12 @@
+# 构建产物与本地缓存
+dist/
+node_modules/
+public/downloads/*
+!public/downloads/.gitkeep
+
+# 本地后台保存前的备份
+data/*.bak
+
+# 系统垃圾
+Thumbs.db
+.DS_Store

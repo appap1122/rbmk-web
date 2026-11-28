@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>重置版 · 百科 | RBMK 显示屏</title>
+<meta name="description" content="RBMK 显示屏（重置版）18.1-reset：零 TESR 渲染架构、平贴安装、命名空间 rbmkdisplay、与 18.1 的差异与迁移。">
+<meta name="theme-color" content="#0a0d10">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="shortcut icon" href="assets/favicon.ico">
+</head>
+<body data-page="wiki-rbmk1.html">
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">R</span>
+      <span data-cfg="site.brandName">RBMK 显示屏</span>
+      <span class="brand-sub" data-cfg="site.brandSub">下载站</span>
+    </a>
+    <nav class="nav-links" data-nav aria-label="主导航"></nav>
+    <button class="nav-toggle" aria-label="展开导航" aria-expanded="false">☰</button>
+  </div>
+</header>
+
+<div class="ticker">
+  <div class="ticker-inner" data-ticker></div>
+</div>
+
+<main>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="eyebrow">Wiki · Reset</div>
+      <h1>RBMK 显示屏（重置版）</h1>
+      <p class="lede">
+        功能与 18.1 对齐、渲染架构完全重写的一条产品线：<b>没有 TESR</b>，画面进区块静态网格体系。
+        这一页讲它和原版线到底差在哪、什么时候该选它。
+      </p>
+      <div class="badge-row" style="margin-top:14px">
+        <span class="badge blue">modid · rbmkdisplay</span>
+        <span class="badge">18.1-reset</span>
+        <span class="badge">零 TESR</span>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="wiki-layout">
+        <nav class="wiki-nav" aria-label="目录">
+          <h4>目录</h4>
+          <a href="#why">为什么要重置</a>
+          <a href="#arch">渲染架构</a>
+          <a href="#mount">安装方式</a>
+          <a href="#diff">与原版线的差异</a>
+          <a href="#compat">存档与兼容</a>
+          <a href="#install">怎么装</a>
+          <a href="#trouble">排查</a>
+          <a href="wiki.html">← 返回总百科</a>
+        </nav>
+
+        <div class="wiki-body">
+
+          <h2 id="why">为什么要重置</h2>
+          <p>原版线沿用 TESR（<code>TileEntitySpecialRenderer</code>）把整块屏幕画在方块实体上。这套东西的代价很实在：</p>
+          <ul>
+            <li>每块屏每帧都要走一次自定义渲染，屏多了帧数掉得肉眼可见；</li>
+            <li>遮挡关系由渲染顺序决定，屏体一半埋进墙里时会出现穿透；</li>
+            <li>光影包接管渲染管线后，自绘几何经常被整段覆盖或采样错位。</li>
+          </ul>
+          <p>重置版把这一层整个拆掉：屏幕画面作为<b>普通方块模型</b>的一部分参与区块网格构建，交给原版渲染器画。</p>
+
+          <h2 id="arch">渲染架构</h2>
+          <table>
+            <thead><tr><th>环节</th><th>原版线</th><th>重置版</th></tr></thead>
+            <tbody>
+              <tr><td>屏体几何</td><td>TESR 自绘</td><td>烘焙进区块模型的静态几何</td></tr>
+              <tr><td>画面来源</td><td>动态纹理逐帧上传</td><td>动态纹理按需更新，走世界渲染事件层</td></tr>
+              <tr><td>遮挡</td><td>渲染顺序决定，易穿透</td><td>随方块面一起参与深度测试，天然正确</td></tr>
+              <tr><td>光影包</td><td>自绘几何经常失效</td><td>作为普通几何被光影正常处理</td></tr>
+              <tr><td>方块实体</td><td>必须存在</td><td>仅保留数据，不承担渲染</td></tr>
+            </tbody>
+          </table>
+          <div class="callout">
+            <strong>代价：</strong>屏幕画面不再是「每帧重绘的自由画布」，而是跟随区块网格刷新。所以画面更新频率受区块重建节奏影响，超高频刷新档（50ms）在原版线上能用，重置版上收益有限。
+          </div>
+
+          <h2 id="mount">安装方式</h2>
+          <p>重置版把屏体改为<b>平贴安装</b>：多方块结构必须贴在同一平面上，暂不支持原版线的连续倾斜吊装。水平方向依旧是 4×3 那种拼法。</p>
+          <p>如果你在中控室里做过倾斜吊装的造型，搬到重置版需要重新摆一次；已经摆好的平贴屏不受影响。</p>
+
+          <h2 id="diff">与原版线的差异</h2>
+          <table>
+            <thead><tr><th>项目</th><th>RBMK 显示屏</th><th>重置版</th></tr></thead>
+            <tbody>
+              <tr><td>modid</td><td><code>jiezhirbmkmod</code></td><td><code>rbmkdisplay</code></td></tr>
+              <tr><td>注册前缀</td><td><code>jiezhirbmkmod:</code></td><td><code>rbmkdisplay:</code></td></tr>
+              <tr><td>物品名</td><td colspan="2" style="text-align:center">同款同名（中文名一致），所以看名字分不出来，看 modid 或者 F3+H 的注册名</td></tr>
+              <tr><td>屏体安装</td><td>支持连续倾斜</td><td>平贴</td></tr>
+              <tr><td>存档</td><td>与 17.x 同源</td><td>独立命名空间，<b>不互通</b></td></tr>
+              <tr><td>指令</td><td colspan="2" style="text-align:center">完全一致</td></tr>
+              <tr><td>物品 / 玩法</td><td colspan="2" style="text-align:center">完全一致（终端、PDA、巡屏、聚合、审计、导出）</td></tr>
+            </tbody>
+          </table>
+
+          <h2 id="compat">存档与兼容</h2>
+          <ul>
+            <li>重置版<b>读不了</b>原版线放下的方块，反之亦然。两套模组同时装时，同一个存档里会同时出现两种屏，但它们互相不认识。</li>
+            <li>想换线：先在一个干净存档里试，确认造型和玩法都能接受，再决定是否迁移；已有大屏的存档<b>不要</b>直接换。</li>
+            <li>服务端 / 客户端版本仍需一致；握手规则与原版线相同（18.3 起对端没装会放行，装了不同版本会被拒）。</li>
+          </ul>
+
+          <h2 id="install">怎么装</h2>
+          <ol>
+            <li>Forge 1.12.2（14.23.x），HBM 核技术本体。</li>
+            <li>把重置版的 jar 放进 <code>mods/</code>，<b>移除原版线的 jar</b>。</li>
+            <li>启动，日志里出现 <code>rbmkdisplay ... is loading.</code>。</li>
+          </ol>
+
+          <h2 id="trouble">排查</h2>
+          <h3>放下去是紫黑方块（缺模型）</h3>
+          <p>两个版本线的资源包同名冲突。确认 <code>mods/</code> 里只有一个本模组的 jar。</p>
+          <h3>屏幕亮但不更新</h3>
+          <p>区块网格没重建。走远再走回来，或者用刷新率调节器点一下强制重发。</p>
+          <h3>屏体拼不起来</h3>
+          <p>平贴限制：确认所有方块在同一个平面上、朝向一致。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><span class="brand-mark">R</span> RBMK 显示屏 · 下载站</div>
+        <p data-cfg="footer.note"></p>
+      </div>
+      <div><h5 data-cfg="footer.navTitle">导航</h5><div data-footer-nav></div></div>
+      <div><h5 data-cfg="footer.linksTitle">资源</h5><div data-footer-links></div></div>
+      <div><h5>声明</h5><p style="font-size:12.5px" data-cfg="footer.copyright"></p></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> RBMK 显示屏 · 纯静态站点</span>
+      <span><a href="wiki.html">总百科</a> · <a href="wiki-rbmk.html">监视器</a> · <a href="downloads.html">下载</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="data/config.js"></script>
+<script src="assets/js/site.js"></script>
+<script src="assets/js/content.js"></script>
+</body>
+</html>

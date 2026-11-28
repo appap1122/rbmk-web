@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RBMK 监视器 · 百科 | RBMK 显示屏</title>
+<meta name="description" content="RBMK 堆芯监视器（热图页）的读法：15×15 柱阵、配色规则、过热描边、多堆芯聚合与巡屏。">
+<meta name="theme-color" content="#0a0d10">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="shortcut icon" href="assets/favicon.ico">
+</head>
+<body data-page="wiki-rbmk.html">
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">R</span>
+      <span data-cfg="site.brandName">RBMK 显示屏</span>
+      <span class="brand-sub" data-cfg="site.brandSub">下载站</span>
+    </a>
+    <nav class="nav-links" data-nav aria-label="主导航"></nav>
+    <button class="nav-toggle" aria-label="展开导航" aria-expanded="false">☰</button>
+  </div>
+</header>
+
+<div class="ticker">
+  <div class="ticker-inner" data-ticker></div>
+</div>
+
+<main>
+  <section class="page-head">
+    <div class="wrap">
+      <div class="eyebrow">Wiki · Monitor</div>
+      <h1>RBMK 监视器</h1>
+      <p class="lede">堆芯监视器（<code>rbmk_monitor</code>）的副屏就是一张 15×15 的柱阵热力图。这一页讲怎么读它。</p>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="wiki-layout">
+        <nav class="wiki-nav" aria-label="目录">
+          <h4>目录</h4>
+          <a href="#what">它是什么</a>
+          <a href="#grid">15×15 柱阵</a>
+          <a href="#color">配色规则</a>
+          <a href="#edge">过热描边</a>
+          <a href="#agg">多堆芯聚合</a>
+          <a href="#patrol">巡屏</a>
+          <a href="#trouble">排查</a>
+          <a href="wiki.html">← 返回总百科</a>
+        </nav>
+
+        <div class="wiki-body">
+
+          <h2 id="what">它是什么</h2>
+          <p>堆芯监视器不是「另一块屏幕」，而是同一块显示屏的<b>热图页</b>：它把 RBMK 反应堆的每一根柱子按坐标铺成一张方格图，格子颜色直接对应这根柱子的温度离熔毁阈值还有多远。</p>
+          <p>和总览页的区别：总览页给你的是<b>一个数</b>（平均柱温、最高柱温），热图给你的是<b>形状</b>——哪一片在热、热斑往哪边扩、控制棒插下去之后温度怎么重分布。</p>
+
+          <h2 id="grid">15×15 柱阵</h2>
+          <ul>
+            <li>一格 = 一根柱子，行列顺序与控制台面板一致，不要按屏幕上的「上」去理解成北。</li>
+            <li>空格 = 这个位置没有柱子（挖空了 / 没建满），不是「温度为零」。</li>
+            <li>缺数据（区块没加载、数据源断开）的格子显示为暗格，不会画成冷色 —— 断线和冷却是两件事。</li>
+            <li>柱子数量、位置变化后，重新右键绑定一次屏幕即可刷新布局。</li>
+          </ul>
+
+          <h2 id="color">配色规则</h2>
+          <p>颜色是<b>相对熔毁阈值</b>的比例，不是绝对温度。同样是 600°C，在一个阈值 800°C 的堆里是橙色，在阈值 1500°C 的堆里还是绿色。</p>
+          <table>
+            <thead><tr><th>区间</th><th>颜色</th><th>含义</th></tr></thead>
+            <tbody>
+              <tr><td>0 – 40%</td><td>冷绿 / 青</td><td>正常运行</td></tr>
+              <tr><td>40 – 70%</td><td>黄</td><td>升温，留意温升速率</td></tr>
+              <tr><td>70 – 90%</td><td>橙</td><td>接近预警，准备插棒</td></tr>
+              <tr><td>&gt; 90%</td><td>红</td><td>临界，随时熔毁</td></tr>
+              <tr><td>熔毁</td><td>红 + 描边闪烁</td><td>该柱已熔毁</td></tr>
+            </tbody>
+          </table>
+          <div class="callout">
+            <strong>配色可以改。</strong>设置中心（蹲下连续右键 2 下）里有四种磷光主题，冷/热两端的色相会跟着换，但<b>比例关系不变</b>。
+          </div>
+
+          <h2 id="edge">过热描边</h2>
+          <p>离熔毁阈值最近的那几格会额外描一圈亮边。这不是按绝对温度挑最高的几根，而是按<b>剩余余量</b>排序 —— 所以一个 1200°C 阈值 1300°C 的柱子会被描边，而一个 700°C 阈值 900°C 的柱子不会。</p>
+          <p>描边同时是给自动化用的信号：整屏的告警等级取的就是这些格子里的最大值。</p>
+
+          <h2 id="agg">多堆芯聚合</h2>
+          <p>一个中控室盯多座堆时，用<b>多堆芯聚合中控</b>（<code>rbmk_aggregate</code>）：潜行右键扫描 24 格内的屏绑进 6 个槽，按「绑定的控制台」自动归堆（同一控制台 = 同一座堆芯，没绑控制台的屏自成一堆）。</p>
+          <ul>
+            <li>排行按柱温降序，熔毁恒置顶</li>
+            <li>每行给出坐标、柱温条形图、通量与告警词</li>
+            <li>实时数据走各屏自己的同步，聚合中控零转发，不会额外增加网络负担</li>
+          </ul>
+
+          <h2 id="patrol">巡屏</h2>
+          <p><b>巡屏中控</b>（<code>rbmk_patrol</code>）解决「屏太多看不过来」：绑进 4 个槽后自动轮播，每 5 秒换一屏，<b>谁告警看谁</b>，告警时立即跳过去。</p>
+          <p>点某一行看详情：状态 + 该屏的柱温历史小图（取自该屏客户端自采历史），不额外请求服务端。</p>
+
+          <h2 id="trouble">排查</h2>
+          <h3>整张图全暗</h3>
+          <p>数据源没绑，或区块没加载。屏幕绑的是控制台坐标，控制台所在区块卸载后会显示暗格并冻结采样。</p>
+          <h3>只剩一半格子有颜色</h3>
+          <p>堆芯只建了一部分，或另一半区块没加载。热图只画实际存在的柱子。</p>
+          <h3>颜色对不上别的屏</h3>
+          <p>两块屏的告警策略不同（每块屏独立保存阈值）。用<b>配置拷贝卡</b>潜行右键源屏、再右键目标屏同步。</p>
+          <h3>想确认这格数据从哪来</h3>
+          <p><code>/rbmktrace</code> 对着屏执行，会打出数据源与采样时间。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand"><span class="brand-mark">R</span> RBMK 显示屏 · 下载站</div>
+        <p data-cfg="footer.note"></p>
+      </div>
+      <div><h5 data-cfg="footer.navTitle">导航</h5><div data-footer-nav></div></div>
+      <div><h5 data-cfg="footer.linksTitle">资源</h5><div data-footer-links></div></div>
+      <div><h5>声明</h5><p style="font-size:12.5px" data-cfg="footer.copyright"></p></div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> RBMK 显示屏 · 纯静态站点</span>
+      <span><a href="wiki.html">总百科</a> · <a href="wiki-rbmk1.html">重置版</a> · <a href="downloads.html">下载</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="data/config.js"></script>
+<script src="assets/js/site.js"></script>
+<script src="assets/js/content.js"></script>
+</body>
+</html>

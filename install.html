@@ -2,106 +2,18 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>安装教程 · RBMK 显示屏</title>
-<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
-<link rel="icon" type="image/png" sizes="48x48" href="assets/favicon-48.png">
-<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
-<link rel="shortcut icon" href="assets/favicon.ico">
-<link rel="stylesheet" href="assets/style.css">
+<title>跳转中 · RBMK 显示屏</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="wiki.html#install">
+<script>location.replace('wiki.html#install' + location.hash);</script>
+<meta http-equiv="refresh" content="0; url=wiki.html#install">
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-
-<header class="nav">
-  <div class="nav-inner">
-    <a class="logo" href="index.html"><img class="logo-img" src="assets/mark-badge-light-64.png" alt="RBMK MONITOR 徽标"><img class="logo-img dark-only" src="assets/mark-badge-dark-64.png" alt="RBMK MONITOR 徽标">RBMK 显示屏</a>
-    <nav class="links">
-      <a href="index.html">首页</a>
-      <a href="features.html">功能</a>
-      <a href="guide.html">教程</a>
-      <a href="screenshots.html">截图</a>
-      <a href="download.html">下载</a>
-      <a href="install.html">安装</a>
-      <a href="commands.html">命令</a>
-      <a href="faq.html">FAQ</a>
-      <a href="changelog.html">日志</a>
-      <a href="about.html">署名</a>
-    </nav>
-    <button class="theme-btn" id="themeBtn" title="切换 明/暗 主题" aria-label="切换主题">🌙</button>
-  </div>
-</header>
-
-<div class="page-hero">
-  <i class="glow g1"></i><i class="glow g2"></i>
-  <div class="wrap inner">
-    <h1>安装<span class="gtext">教程</span></h1>
-    <p class="sub">四步上车，三条红线务必遵守。</p>
-  </div>
-</div>
-
-<section style="padding-top:28px">
-  <div class="wrap">
-    <div class="steps">
-      <div class="step"><h4>装好 Forge</h4><p>Minecraft <b>1.12.2</b> + Forge <b>14.23.5.2860</b>（推荐最新版）。</p></div>
-      <div class="step"><h4>放入 HBM</h4><p>本模组是 HBM 核技术的监控外挂，需同时安装 Nuclear Tech Mod。</p></div>
-      <div class="step"><h4>丢进 mods</h4><p>从<a href="download.html">下载中心</a>拿到的 jar 放进 <code>mods/</code> 文件夹，启动游戏。</p></div>
-      <div class="step"><h4>阅读手册</h4><p>合成或 <code>/give</code> 三卷手册，跟着《持证必读》放置第一块屏。</p></div>
-    </div>
-    <div class="warn-box">
-      <b>红线一</b>：原版线与重置版<b>不可同装</b>（存档物品互不通用）；
-      <b>红线二</b>：多人游戏所有客户端必须装<b>同一版本</b>（版本不一致会在握手阶段被拒）；
-      <b>红线三</b>：升级前备份存档，mods 里删光旧版 jar 只留新版。
-    </div>
-  </div>
-</section>
-
-<!-- ============ FAQ ============ -->
-<section class="soft">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-kicker">FAQ</div>
-      <h2>常见问题</h2>
-    </div>
-    <div class="faq">
-      <details open>
-        <summary>曲线导出里历史是空的？</summary>
-        <p>18.1 起，曲线历史<b>屏一放置就开始自动记录</b>，不再要求有人看着屏并停在曲线页。若从 17.x 升级，旧屏会沿用它已记录的历史；新放置的屏从放置那一刻起积累。数据落在游戏目录 <code>rbmk_history/</code>。</p>
-      </details>
-      <details>
-        <summary>真实版显示屏黑屏了，还写着字？</summary>
-        <p>那是断电提示：「真实版曲线显示屏断电，无法记录」。真实版屏需要 <b>HE 或 FE 任一供电</b>（HE 优先）。恢复供电后画面自动恢复，历史原样保留——断电不会丢档也不会挤光曲线。</p>
-      </details>
-      <details>
-        <summary>多人进服被标红拒绝？</summary>
-        <p>网络协议要求两端版本完全一致（如 18.1 ≠ 18.0）。所有客户端与服务端统一升级到同一版本即可。</p>
-      </details>
-      <details>
-        <summary>重置版和原版线怎么选？</summary>
-        <p>想要倾斜吊装、延续老存档 → 原版线；想要更现代的渲染架构（零 TESR、静态网格、更好性能）→ 重置版。两者功能一致，物品同名但存档不互通，只能二选一。</p>
-      </details>
-      <details>
-        <summary>导出 MP4 需要装什么？</summary>
-        <p>可选。安装 JavaCV/FFmpeg 依赖即可直接导出 .mp4；不装也不会崩——自动降级导出 PNG 帧序列 zip。</p>
-      </details>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">
-    <div class="f-links">
-      <a href="download.html">下载中心</a>
-      <a href="https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor" target="_blank">GitHub · 原版线</a>
-      <a href="https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor-reset" target="_blank">GitHub · 重置版</a>
-      <a href="https://gitee.com/baldih/jiezhi-and-baldih-rbmk-monitor" target="_blank">Gitee · 原版线</a>
-      <a href="https://gitee.com/baldih/jiezhi-and-baldih-rbmk-monitor-reset" target="_blank">Gitee · 重置版</a>
-      <a href="https://space.bilibili.com/3494363348863838" target="_blank">原作者主页</a>
-    </div>
-    <p class="credit-line">原作者：<b>树上的节枝（jiezhi）</b> · 本作品基于节枝特效工具 JiezhiMod 二次创作 · <a href="about.html">署名声明</a></p>
-    <p>仅供 Minecraft 游戏娱乐，与任何现实核设施无关 · License MPL-2.0</p>
-  </div>
-</footer>
-
-<script src="assets/main.js"></script>
+  <div class="err-wrap"><div>
+    <div class="err-code" style="font-size:52px">⇥</div>
+    <h1 style="font-size:20px">页面已合并</h1>
+    <p class="err-msg">旧的 <code>install.html</code> 已经并进新结构，正在跳转到 <a href="wiki.html#install">wiki.html#install</a>…</p>
+  </div></div>
 </body>
 </html>

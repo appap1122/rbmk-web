@@ -2,90 +2,18 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>终端命令速查 · RBMK 显示屏</title>
-<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
-<link rel="icon" type="image/png" sizes="48x48" href="assets/favicon-48.png">
-<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
-<link rel="shortcut icon" href="assets/favicon.ico">
-<link rel="stylesheet" href="assets/style.css">
+<title>跳转中 · RBMK 显示屏</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="wiki.html#commands">
+<script>location.replace('wiki.html#commands' + location.hash);</script>
+<meta http-equiv="refresh" content="0; url=wiki.html#commands">
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-
-<header class="nav">
-  <div class="nav-inner">
-    <a class="logo" href="index.html"><img class="logo-img" src="assets/mark-badge-light-64.png" alt="RBMK MONITOR 徽标"><img class="logo-img dark-only" src="assets/mark-badge-dark-64.png" alt="RBMK MONITOR 徽标">RBMK 显示屏</a>
-    <nav class="links">
-      <a href="index.html">首页</a>
-      <a href="features.html">功能</a>
-      <a href="guide.html">教程</a>
-      <a href="screenshots.html">截图</a>
-      <a href="download.html">下载</a>
-      <a href="install.html">安装</a>
-      <a href="commands.html">命令</a>
-      <a href="faq.html">FAQ</a>
-      <a href="changelog.html">日志</a>
-      <a href="about.html">署名</a>
-    </nav>
-    <button class="theme-btn" id="themeBtn" title="切换 明/暗 主题" aria-label="切换主题">🌙</button>
-  </div>
-</header>
-
-<div class="page-hero">
-  <i class="glow g1"></i><i class="glow g2"></i>
-  <div class="wrap inner">
-    <h1>终端<span class="gtext">命令速查</span></h1>
-    <p class="sub">在落地终端 / 便携终端里使用，支持管道与宏。</p>
-  </div>
-</div>
-
-<section style="padding-top:28px">
-  <div class="wrap">
-    <div class="cmd-grid">
-      <div class="cmd-card">
-        <h4>基础命令</h4>
-        <table>
-          <tr><td>status</td><td>输出全部已绑定反应堆的实时状态行</td></tr>
-          <tr><td>help</td><td>列出命令与语法</td></tr>
-          <tr><td>scram &lt;名&gt;</td><td>远程停堆指定反应堆（写入审计日志）</td></tr>
-          <tr><td>bind / unbind</td><td>绑定 / 解绑数据源（<code>bind x y z</code>）</td></tr>
-          <tr><td>page &lt;n&gt;</td><td>切换大屏页号（1 总览 / 2 热图 / 4 曲线）</td></tr>
-          <tr><td>passwd</td><td>设置终端密码（握手保护）</td></tr>
-        </table>
-      </div>
-      <div class="cmd-card">
-        <h4>管道与宏</h4>
-        <table>
-          <tr><td>| filter</td><td><code>status | filter heat &gt; 800</code>，支持 <code>&gt; &lt; &gt;= &lt;= =</code> 与字段别名，结果 10 秒有效</td></tr>
-          <tr><td>macro set</td><td><code>macro set drill scram RBMK-1; status</code> 保存命令序列（嵌套 ≤ 3）</td></tr>
-          <tr><td>macro run</td><td><code>macro run drill</code> 执行已保存的宏</td></tr>
-          <tr><td>macro list</td><td>列出全部宏定义</td></tr>
-          <tr><td>macro del</td><td>删除指定宏</td></tr>
-          <tr><td>export</td><td>配合剪辑 GUI 导出 PNG 序列 / CSV / MP4</td></tr>
-        </table>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:34px">
-      <a class="btn btn-ghost" href="download.html">还没有模组？先去下载 →</a>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">
-    <div class="f-links">
-      <a href="download.html">下载中心</a>
-      <a href="https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor" target="_blank">GitHub · 原版线</a>
-      <a href="https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor-reset" target="_blank">GitHub · 重置版</a>
-      <a href="https://gitee.com/baldih/jiezhi-and-baldih-rbmk-monitor" target="_blank">Gitee · 原版线</a>
-      <a href="https://gitee.com/baldih/jiezhi-and-baldih-rbmk-monitor-reset" target="_blank">Gitee · 重置版</a>
-      <a href="https://space.bilibili.com/3494363348863838" target="_blank">原作者主页</a>
-    </div>
-    <p class="credit-line">原作者：<b>树上的节枝（jiezhi）</b> · 本作品基于节枝特效工具 JiezhiMod 二次创作 · <a href="about.html">署名声明</a></p>
-    <p>仅供 Minecraft 游戏娱乐，与任何现实核设施无关 · License MPL-2.0</p>
-  </div>
-</footer>
-
-<script src="assets/main.js"></script>
+  <div class="err-wrap"><div>
+    <div class="err-code" style="font-size:52px">⇥</div>
+    <h1 style="font-size:20px">页面已合并</h1>
+    <p class="err-msg">旧的 <code>commands.html</code> 已经并进新结构，正在跳转到 <a href="wiki.html#commands">wiki.html#commands</a>…</p>
+  </div></div>
 </body>
 </html>

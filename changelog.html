@@ -2,96 +2,18 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>更新日志 · RBMK 显示屏</title>
-<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
-<link rel="icon" type="image/png" sizes="48x48" href="assets/favicon-48.png">
-<link rel="apple-touch-icon" sizes="180x180" href="assets/favicon-180.png">
-<link rel="shortcut icon" href="assets/favicon.ico">
-<link rel="stylesheet" href="assets/style.css">
+<title>跳转中 · RBMK 显示屏</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="downloads.html">
+<script>location.replace('downloads.html' + location.hash);</script>
+<meta http-equiv="refresh" content="0; url=downloads.html">
+<link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-
-<header class="nav">
-  <div class="nav-inner">
-    <a class="logo" href="index.html"><img class="logo-img" src="assets/mark-badge-light-64.png" alt="RBMK MONITOR 徽标"><img class="logo-img dark-only" src="assets/mark-badge-dark-64.png" alt="RBMK MONITOR 徽标">RBMK 显示屏</a>
-    <nav class="links">
-      <a href="index.html">首页</a>
-      <a href="features.html">功能</a>
-      <a href="guide.html">教程</a>
-      <a href="screenshots.html">截图</a>
-      <a href="download.html">下载</a>
-      <a href="install.html">安装</a>
-      <a href="commands.html">命令</a>
-      <a href="faq.html">FAQ</a>
-      <a href="changelog.html">日志</a>
-      <a href="about.html">署名</a>
-    </nav>
-    <button class="theme-btn" id="themeBtn" title="切换 明/暗 主题" aria-label="切换主题">🌙</button>
-  </div>
-</header>
-
-<div class="page-hero">
-  <i class="glow g1"></i><i class="glow g2"></i>
-  <div class="wrap inner">
-    <h1>更新<span class="gtext">日志</span></h1>
-    <p class="sub">各版本发行说明的精选摘要；完整发行注记见<a href="download.html">下载中心</a>各发行版卡片。</p>
-  </div>
-</div>
-
-<section style="padding-top:28px">
-  <div class="wrap">
-    <div class="log">
-      <div class="log-item">
-        <span class="ver-tag">v18.1</span><span class="date">原版线 · 当前版本</span>
-        <ul>
-          <li><b>曲线历史放置即自动记录</b>——新增 ScreenAutoSampler，屏一放置/区块一加载就采样，导出/回放从放置起就是完整历史</li>
-          <li><b>真实版断电黑屏提示</b>——黑屏显示「真实版曲线显示屏断电，无法记录」，恢复供电自动续录</li>
-          <li><b>历史冻结防丢档</b>——断电/待机期间采样器冻结，黑匣子与落盘文件永不挤光、永不误删</li>
-          <li>18.1 自查修复：黑屏 alpha 透明渲染 BUG、断电空格挤光历史回归 BUG</li>
-          <li>版本号六处同步，语言键 449 条 en/zh 对齐</li>
-        </ul>
-      </div>
-      <div class="log-item">
-        <span class="ver-tag">v18.1-reset</span><span class="date">重置版 · 当前版本</span>
-        <ul>
-          <li><b>监控屏渲染彻底重写，TESR 全部移除</b>——屏体改为自研方块模型（钛灰板段+吊梁，进区块静态网格）</li>
-          <li>画面由自研世界渲染事件层 ScreenWorldRenderer 贴高清 quad，遮挡天然正确，含背面剔除与 64 格距离剔除</li>
-          <li>modid 独立为 <b>rbmkdisplay</b>，与原版线（jiezhirbmkmod）彻底分离</li>
-          <li>功能与 v18.1 完全一致；屏体为平贴安装，暂不支持连续倾斜吊装</li>
-        </ul>
-      </div>
-      <div class="log-item">
-        <span class="ver-tag">v18.0</span><span class="date">原版线 · 大版本</span>
-        <ul>
-          <li><b>历史数据落盘黑匣子</b>——HistoryStore + ScreenScan，<code>rbmk_history/</code> 原子写盘</li>
-          <li>真实版供电体系——HbmEnergyProbe 反射探针 + HE·FE 双源（1 FE 当量 = 10 HE）</li>
-          <li>操作审计日志、终端管道过滤与宏指令、画面轮播屏</li>
-          <li>网络协议代号 9：两端版本必须完全一致，否则握手拒绝</li>
-        </ul>
-      </div>
-    </div>
-    <div style="text-align:center;margin-top:30px">
-      <a class="btn btn-ghost" href="download.html">前往下载中心查看全部版本 →</a>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">
-    <div class="f-links">
-      <a href="download.html">下载中心</a>
-      <a href="https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor" target="_blank">GitHub · 原版线</a>
-      <a href="https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor-reset" target="_blank">GitHub · 重置版</a>
-      <a href="https://gitee.com/baldih/jiezhi-and-baldih-rbmk-monitor" target="_blank">Gitee · 原版线</a>
-      <a href="https://gitee.com/baldih/jiezhi-and-baldih-rbmk-monitor-reset" target="_blank">Gitee · 重置版</a>
-      <a href="https://space.bilibili.com/3494363348863838" target="_blank">原作者主页</a>
-    </div>
-    <p class="credit-line">原作者：<b>树上的节枝（jiezhi）</b> · 本作品基于节枝特效工具 JiezhiMod 二次创作 · <a href="about.html">署名声明</a></p>
-    <p>仅供 Minecraft 游戏娱乐，与任何现实核设施无关 · License MPL-2.0</p>
-  </div>
-</footer>
-
-<script src="assets/main.js"></script>
+  <div class="err-wrap"><div>
+    <div class="err-code" style="font-size:52px">⇥</div>
+    <h1 style="font-size:20px">页面已合并</h1>
+    <p class="err-msg">旧的 <code>changelog.html</code> 已经并进新结构，正在跳转到 <a href="downloads.html">downloads.html</a>…</p>
+  </div></div>
 </body>
 </html>
