@@ -2,112 +2,18 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>收录说明 · RBMK 显示屏</title>
-<meta name="description" content="这个站收什么、怎么提交、Tag 与标签怎么打。">
-<meta name="theme-color" content="#0a0d10">
+<title>跳转中 · 署名</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="credits.html">
+<script>location.replace('credits.html' + location.hash);</script>
+<meta http-equiv="refresh" content="0; url=credits.html">
 <link rel="stylesheet" href="assets/css/style.css">
-<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
-<link rel="shortcut icon" href="assets/favicon.ico">
 </head>
-<body data-page="submit.html">
-
-<header class="nav">
-  <div class="nav-inner">
-    <a class="brand" href="index.html">
-      <span class="brand-mark">R</span>
-      <span data-cfg="site.brandName">RBMK 显示屏</span>
-      <span class="brand-sub" data-cfg="site.brandSub">下载站</span>
-    </a>
-    <nav class="nav-links" data-nav aria-label="主导航"></nav>
-    <button class="nav-toggle" aria-label="展开导航" aria-expanded="false">☰</button>
-  </div>
-</header>
-
-<div class="ticker">
-  <div class="ticker-inner" data-ticker></div>
-</div>
-
-<main>
-  <section class="page-head">
-    <div class="wrap">
-      <div class="eyebrow">Submission</div>
-      <h1>收录说明</h1>
-      <p class="lede">这个站收什么、怎么提交、标签怎么打，都在这一页。</p>
-    </div>
-  </section>
-
-  <section style="padding-top:0">
-    <div class="wrap">
-      <div class="wiki-body" style="max-width:820px">
-
-        <h2>收录范围</h2>
-        <p>只收 HBM 核技术生态里的 Minecraft 1.12.2 Forge 模组，且必须能在 GitHub 或 Gitee 找到公开仓库与发行版（Release）。不接受网盘直链、不接受需要登录才能下载的文件。</p>
-        <ul>
-          <li>必须有公开仓库（GitHub / Gitee 任一）</li>
-          <li>必须有 Release 或 Tag，且能对应到具体版本</li>
-          <li>必须声明依赖（是否要 HBM、是否要别的模组前置）</li>
-          <li>必须能说明 modid，避免与已收录的撞名</li>
-        </ul>
-
-        <h2>怎么提交</h2>
-        <p>在存放本模组的仓库开一个 Issue，标题用「收录申请：&lt;模组名&gt;」，正文按下面的模板填。也可以直接给作者发消息。</p>
-        <div class="callout">
-          <strong>模板：</strong>模组名 / modid / 版本号 → 仓库地址 → 依赖关系 → 一句话简介 + 一张截图 → 授权声明（允许本站索引你的发行版）。
-        </div>
-
-        <h2>Tag 与标签的对应关系</h2>
-        <p>站点不对版本做人工归类，只按 Tag 和发行版标记自动判定。你把 Tag 起对，页面上的标签就对了。</p>
-        <table>
-          <thead><tr><th>判定条件</th><th>页面显示</th><th>说明</th></tr></thead>
-          <tbody>
-            <tr><td>Tag 含 <code>-beta</code></td><td><span class="badge amber">测试版</span></td><td>三条通道之一</td></tr>
-            <tr><td>Tag 含 <code>-preview</code></td><td><span class="badge violet">预览版</span></td><td>三条通道之一</td></tr>
-            <tr><td>其余</td><td><span class="badge green">正式版</span></td><td>默认通道</td></tr>
-            <tr><td>发行版标记为 prerelease</td><td>至少算测试版</td><td>与 Tag 不冲突</td></tr>
-            <tr><td>Tag / 标题含 <code>hotfix</code>、紧急修复</td><td><span class="badge red">紧急修复</span></td><td>可与其他标签叠加</td></tr>
-            <tr><td>Tag / 标题含 <code>major</code>、重大更新</td><td><span class="badge blue">重大更新</span></td><td>可与其他标签叠加</td></tr>
-            <tr><td>Tag / 标题含 <code>unstable</code>、<code>experimental</code>、不稳定</td><td><span class="badge amber dashed">不稳定</span></td><td>任何通道都能挂</td></tr>
-          </tbody>
-        </table>
-
-        <h2>联系方式</h2>
-        <p>有问题先看 <a href="wiki.html#faq">百科页的 FAQ</a>。要改收录信息、撤下某个版本，或者报下载死链，在仓库提 Issue 最快。</p>
-        <ul>
-          <li>GitHub：<a href="https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor/issues" target="_blank" rel="noopener">appap1122/jiezhi-and-baldih-rbmk-monitor/issues</a></li>
-          <li>Gitee：<a href="https://gitee.com/baldih/jiezhi-and-baldih-rbmk-monitor/issues" target="_blank" rel="noopener">gitee.com/baldih/jiezhi-and-baldih-rbmk-monitor/issues</a></li>
-        </ul>
-
-        <h2>文件策略</h2>
-        <p><b>文件不转存。</b>本站只是索引：下载按钮直连 GitHub / Gitee 的发行版附件，作者删了某个版本，按钮会跳回发布页。这里仅提供 <code>public/downloads/</code> 一个口子，给作者手动补传上游缺失的包（由本地后台上传，优先级高于上游数据）。</p>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer class="site-footer">
-  <div class="wrap">
-    <div class="footer-grid">
-      <div>
-        <div class="footer-brand"><span class="brand-mark">R</span> RBMK 显示屏 · 下载站</div>
-        <p data-cfg="footer.note"></p>
-      </div>
-      <div><h5 data-cfg="footer.navTitle">导航</h5><div data-footer-nav></div></div>
-      <div><h5 data-cfg="footer.linksTitle">资源</h5><div data-footer-links></div></div>
-      <div><h5>声明</h5><p style="font-size:12.5px" data-cfg="footer.copyright"></p></div>
-    </div>
-    <div class="footer-bottom">
-      <span>© <span data-year>2026</span> RBMK 显示屏 · 纯静态站点</span>
-      <span><a href="index.html">返回首页</a></span>
-    </div>
-  </div>
-</footer>
-
-<script src="data/config.js"></script>
-<script src="assets/data/releases.js"></script>
-<script src="data/releases.js"></script>
-<script src="assets/js/mods.js"></script>
-<script src="assets/js/site.js"></script>
-<script src="assets/js/content.js"></script>
+<body>
+  <div class="err-wrap"><div>
+    <div class="err-code" style="font-size:52px">⇥</div>
+    <h1 style="font-size:20px">页面已改名</h1>
+    <p class="err-msg">「收录说明」并进了「署名」，正在跳转到 <a href="credits.html">credits.html</a>…</p>
+  </div></div>
 </body>
 </html>

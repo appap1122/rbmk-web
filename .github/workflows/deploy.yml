@@ -17,6 +17,10 @@ concurrency:
   group: pages
   cancel-in-progress: true
 
+env:
+  # Cloudflare Pages 项目名；仓库变量 CLOUDFLARE_PROJECT_NAME 可覆盖
+  CF_PROJECT: ${{ vars.CLOUDFLARE_PROJECT_NAME || 'rbmk-hub' }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -53,13 +57,54 @@ jobs:
       - name: 组装 dist
         run: node scripts/build.mjs
 
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+          retention-days: 7
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
-  # 默认不部署：仓库现在由 GitHub Pages 直接服务 master 分支根目录（legacy 模式），
-  # 如果改成「GitHub Actions」作为 Pages 源，把仓库变量 PAGES_SOURCE 设为 actions
-  # 这一 job 就会接管部署。
+  # ---------- Cloudflare Pages ----------
+  # 构建在 Actions 里完成，Cloudflare 只接收 dist/ 产物。
+  # 需要两个 Secret：CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID。
+  # 没配时这一步只给 warning，不会让工作流红叉。
+  cloudflare:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: 检查 Cloudflare 凭据
+        id: guard
+        env:
+          TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          ACCOUNT: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -n "$TOKEN" ] && [ -n "$ACCOUNT" ]; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+            echo "凭据已配置，准备部署到 Cloudflare Pages（项目：${{ env.CF_PROJECT }}）"
+          else
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::未配置 CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID，跳过 Cloudflare Pages 部署（dist 产物仍已上传）"
+          fi
+
+      - name: 部署到 Cloudflare Pages
+        if: steps.guard.outputs.ok == 'true'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=${{ env.CF_PROJECT }} --branch=master
+
+  # ---------- GitHub Pages（可选） ----------
+  # 仓库目前由 master 分支根目录直接服务；把仓库变量 PAGES_SOURCE 设成 actions
+  # 就由这个 job 接管部署。
   deploy:
     needs: build
     if: vars.PAGES_SOURCE == 'actions'
@@ -70,22 +115,3 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
-
-  # 可选：再把同一份 dist 推到 Cloudflare Pages。
-  # 配好 CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID 后取消注释即可。
-  #
-  # cloudflare:
-  #   needs: build
-  #   if: vars.PAGES_SOURCE == 'cloudflare'
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-node@v4
-  #       with: { node-version: 20 }
-  #     - run: node scripts/sync-releases.mjs
-  #     - run: node scripts/build.mjs
-  #     - uses: cloudflare/wrangler-action@v3
-  #       with:
-  #         apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-  #         accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-  #         command: pages deploy dist --project-name=rbmk-web

@@ -228,7 +228,8 @@
      内容变新就重渲染。这样即使新的 deploy.yml 没启用，数据也不会陈旧。 */
   window.RBMKData = {
     refresh: function (done) {
-      if (!/^https?:$/.test(location.protocol)) { done(false); return; }
+      // 只在没有内联快照时才去拉 JSON（正常情况下一次网络请求都不需要）
+      if (window.__RBMK_DATA__ || !/^https?:$/.test(location.protocol)) { done(false); return; }
       fetch('assets/releases.json', { cache: 'no-store' })
         .then(function (r) { return r.ok ? r.json() : null; })
         .then(function (d) {
@@ -242,62 +243,77 @@
     }
   };
 
-  /* ---------- 首页「收录一览」 ---------- */
+  /* ---------- 首页「收录一览」 ----------
+     首页只加载 assets/data/latest.js（几 KB 的最新版摘要），
+     不再解析 130 KB 的全量快照，弱机首屏明显更快。 */
+  function renderHomeRows(host, cfg, data) {
+    var rows = (data.mods || []);
+    if (!rows.length) {
+      host.innerHTML = '<tr><td colspan="5" class="muted">' +
+        ((cfg.collect && cfg.collect.empty) || '暂无数据') + '</td></tr>';
+      return;
+    }
+    host.innerHTML = rows.map(function (r) {
+      var ver = r.tag ? '<span class="badge green">v' + esc(r.tag) + '</span>' : '<span class="muted">—</span>';
+      var file = r.file
+        ? '<a href="' + esc(r.file.url) + '" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:12.5px">' +
+          esc(r.file.name) + '</a>'
+        : '<span class="muted">—</span>';
+      var dl = typeof r.downloads === 'number'
+        ? String(r.downloads)
+        : '<span class="muted" title="Gitee 不提供下载统计">不提供</span>';
+      return '<tr>' +
+        '<td><b>' + esc(r.name) + '</b><div class="muted" style="font-size:12px;font-family:var(--mono)">' +
+        esc(r.shortName) + '</div></td>' +
+        '<td><code>' + esc(r.modid) + '</code></td>' +
+        '<td>' + ver + (r.date ? '<div class="muted" style="font-size:12px;margin-top:4px">' +
+          esc(fmtDate(r.date)) + '</div>' : '') + '</td>' +
+        '<td>' + file + '</td>' +
+        '<td class="num">' + dl + '</td>' +
+        '</tr>';
+    }).join('');
+  }
+
   window.RBMKHome = {
     boot: function (cfg) {
-      this.cfg = cfg;
-      this.render(cfg);
-      this.bootRefresh(cfg);
-    },
-    bootRefresh: function (cfg) {
-      var self = this;
-      window.RBMKData.refresh(function (changed) {
-        if (changed) self.render(cfg);
-      });
-    },
-    render: function (cfg) {
       var host = document.getElementById('collectTable');
       if (!host) return;
-      var index = buildIndex(cfg);
-      var rows = index.map(function (entry) {
-        var mod = entry.mod;
-        var stable = entry.rows.filter(function (r) { return r.channel === 'stable'; })[0] ||
-          entry.rows[0];
-        var jar = null, downloads = 0, hasCount = false;
-        if (stable) {
-          (stable.assets || []).forEach(function (a) {
-            if (/\.jar$/i.test(a.name) && !jar) jar = a;
-            if (typeof a.downloads === 'number') { downloads += a.downloads; hasCount = true; }
-          });
-        }
-        return { mod: mod, stable: stable, jar: jar, downloads: hasCount ? downloads : null };
-      });
-
-      if (!rows.length) {
-        host.innerHTML = '<tr><td colspan="5" class="muted">' +
-          ((cfg.collect && cfg.collect.empty) || '暂无数据') + '</td></tr>';
-        return;
-      }
-
-      host.innerHTML = rows.map(function (r) {
-        var ver = r.stable ? '<span class="badge green">v' + esc(r.stable.tag) + '</span>' : '<span class="muted">—</span>';
-        var file = r.jar
-          ? '<a href="' + esc(r.jar.url) + '" target="_blank" rel="noopener" style="font-family:var(--mono);font-size:12.5px">' +
-            esc(r.jar.name) + '</a>'
-          : '<span class="muted">—</span>';
-        var dl = r.downloads == null
-          ? '<span class="muted" title="Gitee 不提供下载统计">不提供</span>'
-          : String(r.downloads);
-        return '<tr>' +
-          '<td><b>' + esc(r.mod.name) + '</b><div class="muted" style="font-size:12px;font-family:var(--mono)">' +
-          esc(r.mod.shortName) + '</div></td>' +
-          '<td><code>' + esc(r.mod.modid) + '</code></td>' +
-          '<td>' + ver + (r.stable ? '<div class="muted" style="font-size:12px;margin-top:4px">' +
-            esc(fmtDate(r.stable.date)) + '</div>' : '') + '</td>' +
-          '<td>' + file + '</td>' +
-          '<td class="num">' + dl + '</td>' +
-          '</tr>';
-      }).join('');
+      if (window.__RBMK_LATEST__) { renderHomeRows(host, cfg, window.__RBMK_LATEST__); return; }
+      // file:// 或 latest.js 缺失时退回运行时拉取
+      fetch('assets/data/latest.json', { cache: 'no-cache' })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) {
+          if (d) renderHomeRows(host, cfg, d);
+          else if (window.__RBMK_DATA__) renderHomeRows(host, cfg, legacyFromFull(cfg, window.__RBMK_DATA__));
+          else host.innerHTML = '<tr><td colspan="5" class="muted">数据还没同步。</td></tr>';
+        })
+        .catch(function () {
+          host.innerHTML = '<tr><td colspan="5" class="muted">数据还没同步。</td></tr>';
+        });
     }
   };
+
+  /* 兜底：从全量快照里折出首页需要的那几行 */
+  function legacyFromFull(cfg, data) {
+    var out = [];
+    (cfg.mods || []).forEach(function (mod) {
+      var rows = [];
+      (mod.sources || []).forEach(function (s) {
+        rows = rows.concat((data.repos || {})[sourceKey(s)] || []);
+      });
+      var stable = rows.filter(function (r) { return !r.prerelease; });
+      stable.sort(function (a, b) { return Date.parse(b.date || 0) - Date.parse(a.date || 0); });
+      var pick = stable[0];
+      var jar = null, dl = 0, has = false;
+      (pick && pick.assets ? pick.assets : []).forEach(function (a) {
+        if (/\.jar$/i.test(a.name) && !jar) jar = a;
+        if (typeof a.downloads === 'number') { dl += a.downloads; has = true; }
+      });
+      out.push({ id: mod.id, name: mod.name, shortName: mod.shortName, modid: mod.modid,
+        tag: pick ? pick.tag : '', date: pick ? pick.date : '',
+        file: jar ? { name: jar.name, url: jar.url, size: jar.size } : null,
+        downloads: has ? dl : undefined });
+    });
+    return { mods: out };
+  }
 })();

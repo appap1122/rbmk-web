@@ -85,7 +85,7 @@ for (const [tag, name, pre, ch, flags] of cases) {
 }
 
 console.log('smoke: 页面引用');
-const pages = ['index.html', 'downloads.html', 'wiki.html', 'wiki-rbmk.html', 'wiki-rbmk1.html', 'submit.html', '404.html', 'mods.html'];
+const pages = ['index.html', 'downloads.html', 'wiki.html', 'wiki-rbmk.html', 'wiki-rbmk1.html', 'credits.html', 'submit.html', '404.html', 'mods.html'];
 const need = [
   'assets/css/style.css',
   'assets/js/content.js',

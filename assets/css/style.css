@@ -37,31 +37,16 @@ html { scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  background: var(--bg);
+  background: #0a0d10;
   color: var(--text);
   font: 15px/1.75 var(--sans);
   -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+  /* 静态底纹：不随滚动重绘（原来的 fixed 背景在 Win7 上滚动会掉帧） */
   background-image:
-    radial-gradient(1100px 480px at 82% -8%, rgba(255, 176, 32, .07), transparent 62%),
-    radial-gradient(900px 420px at 8% 4%, rgba(74, 168, 255, .05), transparent 60%),
-    linear-gradient(180deg, #0b0f13, #0a0d10 40%);
-  background-attachment: fixed;
-  min-height: 100vh;
-}
-
-/* 极细网格，模拟控制室地面 */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, .018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, .018) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, .016) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, .016) 1px, transparent 1px);
   background-size: 44px 44px;
-  mask-image: radial-gradient(120% 90% at 50% 0%, #000 30%, transparent 85%);
+  min-height: 100vh;
 }
 
 a { color: var(--amber); text-decoration: none; }
@@ -99,8 +84,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 34px 0; }
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(10, 13, 16, .82);
-  backdrop-filter: blur(14px) saturate(140%);
+  background: #0a0d10;               /* 原来是半透明 + backdrop-filter，滚动时每帧模糊整屏 */
   border-bottom: 1px solid var(--line);
 }
 .nav-inner {
@@ -220,10 +204,10 @@ section.soft { background: linear-gradient(180deg, rgba(255, 255, 255, .015), tr
   font-weight: 600;
   font-size: 14px;
   cursor: pointer;
-  transition: transform .15s ease, border-color .15s, background .15s, box-shadow .15s;
+  transition: border-color .12s, background .12s, color .12s;
   white-space: nowrap;
 }
-.btn:hover { transform: translateY(-1px); border-color: var(--line-2); background: var(--panel-3); color: #fff; }
+.btn:hover { border-color: var(--line-2); background: var(--panel-3); color: #fff; }
 .btn-primary {
   background: linear-gradient(180deg, #ffc247, var(--amber) 60%, #e69a00);
   border-color: #ffcf70;
@@ -288,7 +272,6 @@ section.soft { background: linear-gradient(180deg, rgba(255, 255, 255, .015), tr
   background: linear-gradient(180deg, var(--panel-2), var(--panel));
   border: 1px solid var(--line-2);
   border-radius: 12px;
-  box-shadow: var(--shadow);
   overflow: hidden;
   position: relative;
 }
@@ -343,7 +326,7 @@ section.soft { background: linear-gradient(180deg, rgba(255, 255, 255, .015), tr
   position: relative;
   transition: border-color .18s, transform .18s, box-shadow .18s;
 }
-.card:hover { border-color: var(--line-2); transform: translateY(-2px); box-shadow: var(--shadow); }
+.card:hover { border-color: var(--line-2); }
 .card h3 { font-size: 17px; }
 .card p:last-child { margin-bottom: 0; }
 
@@ -451,18 +434,10 @@ section.soft { background: linear-gradient(180deg, rgba(255, 255, 255, .015), tr
 .release-meta { margin-left: auto; text-align: right; display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
 .release-date { font: 11.5px/1 var(--mono); color: var(--muted); }
 .release-labels { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
-.release-body { display: none; border-top: 1px solid var(--line); padding: 16px 18px 18px; }
-.release.open .release-body { display: block; }
-.release.open .release-head { border-bottom: 1px solid var(--line); }
-
-.asset-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
-.asset {
-  display: flex; align-items: center; gap: 12px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 10px 12px;
-  background: var(--bg-2);
-  font-size: 13.5px;
+.release-body {
+  display: none;
+  border-top: 1px solid var(--line);
+  padding: 16px 18px 18px;
 }
 .asset .asset-name { font-family: var(--mono); font-size: 12.5px; word-break: break-all; }
 .asset .asset-kind { font: 10.5px/1 var(--mono); color: var(--muted); border: 1px solid var(--line-2); border-radius: 4px; padding: 3px 5px; }
@@ -549,34 +524,6 @@ section.soft { background: linear-gradient(180deg, rgba(255, 255, 255, .015), tr
 .wiki-body th { background: var(--panel-2); font-weight: 600; }
 .wiki-body td code { white-space: normal; }
 
-/* ---------- 视频 ---------- */
-.video-card {
-  display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, .7fr);
-  gap: 0;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  overflow: hidden;
-  background: var(--panel);
-}
-.video-frame { position: relative; aspect-ratio: 16 / 9; background: #05080a; }
-.video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-.video-facade {
-  position: absolute; inset: 0;
-  display: grid; place-items: center;
-  background: radial-gradient(60% 60% at 50% 45%, rgba(255, 176, 32, .16), transparent 70%), #070b0e;
-  cursor: pointer; border: 0; width: 100%; color: var(--text);
-}
-.video-facade .play {
-  width: 62px; height: 62px; border-radius: 50%;
-  background: var(--amber); color: #11161a;
-  display: grid; place-items: center;
-  font-size: 22px; margin: 0 auto 12px;
-  box-shadow: 0 0 0 8px rgba(255, 176, 32, .12);
-}
-.video-facade span { font: 600 13px/1.4 var(--sans); }
-.video-side { padding: 22px; display: flex; flex-direction: column; justify-content: center; gap: 10px; }
-.video-side h3 { margin: 0; }
-
 /* ---------- 页脚 ---------- */
 footer.site-footer {
   border-top: 1px solid var(--line);
@@ -610,10 +557,10 @@ footer.site-footer {
 }
 
 /* ---------- 入场动画 ---------- */
-[data-reveal] { opacity: 0; transform: translateY(14px); transition: opacity .5s ease, transform .5s ease; }
-[data-reveal].in { opacity: 1; transform: none; }
+[data-reveal] { opacity: 0; transition: opacity .35s ease; }
+[data-reveal].in { opacity: 1; }
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal] { opacity: 1; transform: none; transition: none; }
+  [data-reveal] { opacity: 1; transition: none; }
   html { scroll-behavior: auto; }
   .cursor { animation: none; }
 }

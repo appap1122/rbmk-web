@@ -18,13 +18,17 @@ import { readFile, writeFile, mkdir, rm, cp, stat, readdir } from 'node:fs/promi
 import { existsSync } from 'node:fs';
 import { dirname, join, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { classify } from './release-labels.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = join(ROOT, 'dist');
 
 const PAGES = [
   'index.html', 'wiki.html', 'wiki-rbmk.html', 'wiki-rbmk1.html',
-  'downloads.html', 'submit.html', 'mods.html', '404.html',
+  'downloads.html', 'credits.html', 'submit.html', 'mods.html', '404.html',
+  // 旧地址跳转页
+  'features.html', 'guide.html', 'screenshots.html', 'install.html',
+  'commands.html', 'faq.html', 'changelog.html', 'download.html', 'about.html',
 ];
 
 async function readJson(p, fallback) {
@@ -96,6 +100,55 @@ console.log('  ✓ data/（config.js / releases.js / mods.js 已生成）');
 // 4. 手工上传的下载包
 const dlCount = await copyDir(join(ROOT, 'public', 'downloads'), join(DIST, 'downloads'));
 console.log(`  ✓ downloads/ — ${dlCount} 个文件`);
+
+/* ---------- assets/data/latest.json：首页专用瘦身摘要 ----------
+   首页只需要「每个模组的最新正式版 + 一个 jar + 下载量」，
+   没必要解析 130 KB 的全量快照（Win7 上差别肉眼可见）。 */
+const synced = await readJson(join(ROOT, 'assets', 'data', 'releases.json'), { repos: {} });
+const local = await readJson(join(ROOT, 'data', 'releases.json'), { mods: {} });
+
+function latestFor(mod) {
+  let rows = [];
+  for (const s of mod.sources || []) {
+    rows = rows.concat((synced.repos || {})[`${s.platform}:${s.repo}`] || []);
+  }
+  for (const r of (local.mods || {})[mod.id] || []) {
+    const { channel } = classify(r.tag || '', r.name || '', false);
+    if (channel !== 'stable') return;
+    rows.push({ tag: r.tag, name: r.name, date: r.date, prerelease: false, assets: r.files || [] });
+  }
+  const byDate = (a, b) => Date.parse(b.date || 0) - Date.parse(a.date || 0);
+  const stable = rows.filter((r) => !r.prerelease).sort(byDate);
+  const pick = stable[0] || rows.sort(byDate)[0];
+  let jar = null, downloads = 0, hasCount = false;
+  for (const a of (pick && pick.assets) || []) {
+    if (/\.jar$/i.test(a.name) && !jar) jar = a;
+    if (typeof a.downloads === 'number') { downloads += a.downloads; hasCount = true; }
+  }
+  return {
+    id: mod.id, name: mod.name, shortName: mod.shortName, modid: mod.modid,
+    tag: pick ? pick.tag : '', date: pick ? pick.date : '',
+    file: jar ? { name: jar.name, url: jar.url, size: jar.size } : null,
+    downloads: hasCount ? downloads : undefined,
+  };
+}
+
+const latest = {
+  updated_at: synced.updated_at || null,
+  mods: (config.mods || []).map(latestFor),
+};
+const latestJson = JSON.stringify(latest, null, 2) + '\n';
+for (const base of [DIST, ROOT]) {
+  await mkdir(join(base, 'assets', 'data'), { recursive: true });
+  await writeFile(join(base, 'assets', 'data', 'latest.json'), latestJson, 'utf8');
+  await writeFile(
+    join(base, 'assets', 'data', 'latest.js'),
+    '/* 自动生成，勿手改。源：assets/data/releases.json */\n' +
+    `window.__RBMK_LATEST__ = ${JSON.stringify(latest)};\n`,
+    'utf8'
+  );
+}
+console.log(`  ✓ assets/data/latest.json — ${(latestJson.length / 1024).toFixed(1)} KB（首页专用）`);
 
 // 5. 响应头（Cloudflare Pages 用；GitHub Pages 忽略）与 .nojekyll
 if (existsSync(join(ROOT, '_headers'))) {
