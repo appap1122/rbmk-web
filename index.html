@@ -3,196 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RBMK 显示屏 · 下载站</title>
-<meta name="description" data-cfg-content="site.description" content="RBMK 显示屏（Minecraft 1.12.2 Forge）与重置版的下载中心、百科与署名说明。">
-<meta name="theme-color" content="#0a0d10">
-<link rel="stylesheet" href="assets/css/style.css">
-<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
-<link rel="shortcut icon" href="assets/favicon.ico">
+<title>站点已迁移 · RBMK 显示屏</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://appap1122.github.io/">
+<script>
+  // 迁移到用户站根路径：保留原路径（/rbmk-hub/downloads.html → /downloads.html）
+  (function () {
+    var base = 'https://appap1122.github.io/';
+    var p = location.pathname.replace(/^\/rbmk-hub\/?/, '');
+    if (p === 'index.html') p = '';
+    location.replace(base + p + location.search + location.hash);
+  })();
+</script>
+<meta http-equiv="refresh" content="0; url=https://appap1122.github.io/">
+<style>
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center;
+         background: #0a0d10; color: #e7eef5;
+         font: 15px/1.7 -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; }
+  .box { text-align: center; padding: 40px 24px; max-width: 520px; }
+  .code { font: 800 64px/1 ui-monospace, Consolas, monospace; color: #ffb020; letter-spacing: -.04em; }
+  a { color: #ffb020; }
+  p { color: #b6c4d0; }
+</style>
 </head>
-<body data-page="index.html">
-
-<header class="nav">
-  <div class="nav-inner">
-    <a class="brand" href="index.html">
-      <span class="brand-mark">R</span>
-      <span data-cfg="site.brandName">RBMK 显示屏</span>
-      <span class="brand-sub" data-cfg="site.brandSub">下载站</span>
-    </a>
-    <nav class="nav-links" data-nav aria-label="主导航"></nav>
-    <button class="nav-toggle" aria-label="展开导航" aria-expanded="false">☰</button>
+<body>
+  <div class="box">
+    <div class="code">⇥</div>
+    <h1 style="font-size:20px;margin:12px 0">站点已迁移</h1>
+    <p>新地址是 <a href="https://appap1122.github.io/">https://appap1122.github.io/</a>，正在跳转…</p>
+    <p style="font-size:13px;color:#7f909e">没反应就点上面的链接。</p>
   </div>
-</header>
-
-<div class="ticker">
-  <div class="ticker-inner" data-ticker></div>
-</div>
-
-<main>
-  <!-- Hero -->
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div>
-        <div class="badge-row">
-          <span class="badge amber" data-cfg="hero.tag">Minecraft 1.12.2 · Forge · HBM</span>
-          <span class="badge">MPL-2.0</span>
-          <span class="badge">双版本线</span>
-        </div>
-        <h1>
-          <span data-cfg="hero.title">把中控室搬进 Minecraft</span>
-          <span class="accent" data-cfg="hero.titleAccent">RBMK 显示屏</span>
-        </h1>
-        <p class="lede" data-cfg="hero.lede"></p>
-        <div class="cta">
-          <a class="btn btn-primary" href="downloads.html" data-cfg-href="hero.primaryHref">
-            <span data-cfg="hero.primaryText">下载中心</span>
-          </a>
-          <a class="btn btn-ghost" href="wiki.html" data-cfg-href="hero.secondaryHref">
-            <span data-cfg="hero.secondaryText">查看百科</span>
-          </a>
-        </div>
-        <div class="hero-meta">
-          <span>四页大屏 · 真实版供电</span>
-          <span>历史黑匣子</span>
-          <span>终端管道命令</span>
-        </div>
-      </div>
-
-      <div class="console" aria-hidden="true">
-        <div class="console-bar"><i></i><i></i><i></i><span>rbmk-terminal — zsh</span></div>
-        <div class="console-body">
-          <div><span class="dim">rbmk@factory:~$</span> status</div>
-          <div><span class="blue">RBMK-1</span>&nbsp; heat 612.4&nbsp; flux 8.42k&nbsp; <span class="warn">[WARN]</span></div>
-          <div><span class="blue">RBMK-4</span>&nbsp; heat 931.0&nbsp; flux 6.10k&nbsp; <span class="err">[HOT]</span></div>
-          <div style="height:8px"></div>
-          <div><span class="dim">rbmk@factory:~$</span> watch heat &gt; 800 do scram</div>
-          <div><span class="ok">rule armed</span> · persists to rbmk_watch.json</div>
-          <div style="height:8px"></div>
-          <div><span class="dim">rbmk@factory:~$</span> export clip 12:04~12:31 mp4</div>
-          <div>encoding ▸▸▸ <span class="ok">done</span> · 27s @ 10fps</div>
-          <div><span class="dim">rbmk@factory:~$</span> <span class="cursor"></span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 双版本 -->
-  <section class="soft" id="editions">
-    <div class="wrap">
-      <div class="sec-head" data-reveal>
-        <div class="eyebrow" data-cfg="editions.eyebrow">Two Editions</div>
-        <h2 data-cfg="editions.title">一个模组，两条产品线</h2>
-        <p class="lede" data-cfg="editions.sub"></p>
-      </div>
-      <div class="grid grid-2">
-        <article class="edition" data-reveal>
-          <span class="badge amber" data-cfg="editions.items.0.pill">原版线</span>
-          <h3 style="margin-top:12px" data-cfg="editions.items.0.name">RBMK 显示屏</h3>
-          <div class="ver-line"><span data-cfg="editions.items.0.tagline"></span></div>
-          <ul>
-            <li>监控屏采用 <b>TESR 渲染</b>（继承自原作设计的体系）</li>
-            <li>支持屏体<b>连续倾斜吊装</b>（原作同款吊装手感）</li>
-            <li>与 17.x 系列老存档同源，长期服役存档首选</li>
-            <li>全功能：四页屏 / 真实版 / 终端 / 轮播 / 审计 / 剪辑导出</li>
-          </ul>
-          <div class="ed-actions">
-            <a class="btn btn-sm btn-primary" href="downloads.html?mod=rbmk">下载原版线</a>
-            <a class="btn btn-sm btn-ghost" href="wiki.html">看百科</a>
-          </div>
-        </article>
-
-        <article class="edition alt" data-reveal>
-          <span class="badge blue" data-cfg="editions.items.1.pill">重置版</span>
-          <h3 style="margin-top:12px" data-cfg="editions.items.1.name">RBMK 显示屏（重置版）</h3>
-          <div class="ver-line"><span data-cfg="editions.items.1.tagline"></span></div>
-          <ul>
-            <li><b>零 TESR</b>：渲染彻底重写为自研方块模型 + 世界渲染事件层</li>
-            <li>画面进区块静态网格体系，遮挡天然正确、性能更好</li>
-            <li>屏体改为<b>平贴安装</b>（暂不支持连续倾斜）</li>
-            <li>注册前缀 <code>rbmkdisplay:</code>，与 18.1 同款同名但存档不互通</li>
-          </ul>
-          <div class="ed-actions">
-            <a class="btn btn-sm btn-primary" href="downloads.html?mod=reset">下载重置版</a>
-            <a class="btn btn-sm btn-ghost" href="wiki-rbmk1.html">看百科</a>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- 收录一览 -->
-  <section id="collect">
-    <div class="wrap">
-      <div class="sec-head" data-reveal>
-        <div class="eyebrow" data-cfg="collect.eyebrow">Collection</div>
-        <h2 data-cfg="collect.title">收录一览</h2>
-        <p class="lede" data-cfg="collect.sub"></p>
-      </div>
-      <div class="card" style="padding:6px 10px" data-reveal>
-        <table class="collect-table">
-          <thead>
-            <tr>
-              <th>模组</th><th>modid</th><th>最新正式版</th><th>安装包</th><th style="text-align:right">下载量</th>
-            </tr>
-          </thead>
-          <tbody id="collectTable">
-            <tr><td colspan="5" class="muted">载入中…</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="muted" style="font-size:12.5px;margin-top:12px">
-        下载量来自 GitHub Release 的统计；Gitee 不提供该数据，所以那边显示「不提供」。
-      </p>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="tight">
-    <div class="wrap" style="text-align:center">
-      <h2>准备好开堆了吗</h2>
-      <p class="lede" style="max-width:560px;margin:0 auto 22px">
-        先去下载中心挑一个版本线装进 <code>mods/</code>，遇到问题看百科的 FAQ。
-      </p>
-      <div class="cta" style="justify-content:center">
-        <a class="btn btn-primary" href="downloads.html">下载中心</a>
-        <a class="btn btn-ghost" href="wiki.html">百科与 FAQ</a>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer class="site-footer">
-  <div class="wrap">
-    <div class="footer-grid">
-      <div>
-        <div class="footer-brand"><span class="brand-mark">R</span> RBMK 显示屏 · 下载站</div>
-        <p data-cfg="footer.note"></p>
-      </div>
-      <div>
-        <h5 data-cfg="footer.navTitle">导航</h5>
-        <div data-footer-nav></div>
-      </div>
-      <div>
-        <h5 data-cfg="footer.linksTitle">资源</h5>
-        <div data-footer-links></div>
-      </div>
-      <div>
-        <h5>声明</h5>
-        <p style="font-size:12.5px" data-cfg="footer.copyright"></p>
-        <p style="font-size:12.5px">仅供 Minecraft 游戏娱乐，与任何现实核设施无关。</p>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© <span data-year>2026</span> RBMK 显示屏 · 纯静态站点</span>
-      <span>数据来自 GitHub / Gitee 发行版 · <a href="credits.html">署名</a></span>
-    </div>
-  </div>
-</footer>
-
-<script src="data/config.js" defer></script>
-<script src="assets/data/latest.js" defer></script>
-<script src="assets/js/mods.js" defer></script>
-<script src="assets/js/site.js" defer></script>
-<script src="assets/js/content.js" defer></script>
 </body>
 </html>
