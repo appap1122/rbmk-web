@@ -1,5 +1,5 @@
 {
-  "name": "rbmk-web",
+  "name": "rbmk-hub",
   "version": "1.0.0",
   "private": true,
   "description": "RBMK 显示屏下载站（原版线 + 重置版）：静态站点 + 发行版同步 + 本地管理后台",

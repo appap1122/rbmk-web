@@ -9,7 +9,7 @@
     "tickerLabel": "原版线最新正式版",
     "tickerNote": "与 GitHub / Gitee 发行版定时同步",
     "tickerLinkText": "前往下载中心 →",
-    "repoUrl": "https://github.com/appap1122/rbmk-web"
+    "repoUrl": "https://github.com/appap1122/rbmk-hub"
   },
   "nav": [
     { "text": "首页", "href": "index.html" },
@@ -176,7 +176,7 @@
     ]
   },
   "links": {
-    "repo": "https://github.com/appap1122/rbmk-web",
+    "repo": "https://github.com/appap1122/rbmk-hub",
     "modRepo": "https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor",
     "modRepoReset": "https://github.com/appap1122/jiezhi-and-baldih-rbmk-monitor-reset",
     "giteeRepo": "https://gitee.com/baldih/jiezhi-and-baldih-rbmk-monitor",
