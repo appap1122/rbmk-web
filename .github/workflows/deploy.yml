@@ -40,13 +40,15 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if ! git diff --quiet -- assets/data data; then
-            git add assets/data data
-            git commit -m "sync: 更新发行版快照 $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            git push
-          else
+          git add -A assets/data assets/releases.json data
+          if git diff --cached --quiet; then
             echo "数据无变化，跳过提交"
+            exit 0
           fi
+          git commit -m "sync: 更新发行版快照 $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          # 并发触发（push + schedule）时远端可能已经有新提交，先 rebase 再推
+          git pull --rebase --autostash origin master || true
+          git push || echo "推送失败（并发冲突），本次改动留给下一次运行"
 
       - name: 组装 dist
         run: node scripts/build.mjs
